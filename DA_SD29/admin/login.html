@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/admin/login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<body>
+    <div class="login">
+        <h2>Đăng Nhập</h2>
+        <div class="login-1">
+            <form class="form-login" ng-submit="login()">
+                <h3>
+                    Khách hàng đã đăng ký
+                </h3>
+                <p>Nếu bạn đã có tài khoản, đăng nhập với email và mật khẩu</p>
+                <div class="contact-left">
+                    <span class="content-left">
+                        <div>
+                            <label>Email <span>*</span></label><br>
+                            <input class="custom-input" type="text" placeholder="Điền Email" ng-model="user.email" required>
+                            <span class="error-message" ng-show="emailError">{{ emailErrorMessage }}</span>
+                        </div>
+                        <div>
+                            <label>Mật khẩu <span>*</span></label><br>
+                            <input class="custom-input" type="password" placeholder="Điền mật khẩu" ng-model="user.password" required>
+                        </div>
+                    </span>
+                    <div class="button">
+                        <button class="btn-login" type="submit">Đăng nhập</button>
+                        <p ng-click="changePass()">Quên mật khẩu ?</p>
+                    </div>
+                </div>
+            </form>
+            <div class="form-login">
+                <h3>
+                    Khách hàng mới
+                </h3>
+                <p>Tạo tài khoản mới để có thêm nhiều lợi ích</p>
+                <ul>
+                    <li>Thủ tục thanh toán nhanh và tiện hơn</li>
+                    <li>Có thể lưu nhiều hơn một địa chỉ</li>
+                    <li>Theo dõi hóa đơn và nhiều hơn thế</li>
+                </ul>
+                <button class="btn-regis" ng-click="register()">Đăng ký</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

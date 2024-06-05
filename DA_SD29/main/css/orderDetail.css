@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+body {
+  /* border-top: #0188ff solid; */
+  font-family: 'Quicksand', sans-serif;
+  margin: 1rem 2rem;
+}
+
+
+
+
+.form-thongtin {
+  align-items: center;
+  text-align: start;
+  justify-content: start;
+  width: 700px;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+
+.form-thongtin div {
+  margin-right: 1rem;
+  margin-bottom: 15px;
+}
+
+.content-left {
+  display: flex;
+}
+
+.form-thongtin-diachi input {
+  width: 640px;
+}
+
+
+.custom-input {
+  display: block;
+  width: 300px;
+  height: 20px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-input:hover {
+  border-color: #007bff;
+  box-shadow: 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.custom-input:focus {
+  border: 1px solid #007bff;
+  box-shadow: 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+
+.oderDetail {
+  position: relative;
+}
+
+.back {
+  position: absolute;
+  top: 160px;
+  left: 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.back:hover {
+  color: #0188ff;
+}
+
+.order-address {
+  padding-left: 300px;
+}
+
+.tongbill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 800px;
+  margin-left: 240px;
+  border-top: 1px dotted gray;
+  margin-top: 25px;
+}
+
+.tongbill h4:last-child {
+  color: orange;
+}
+
+.table-product {
+  width: 940px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-left: 190px;
+  margin-top: 20px;
+}
+
+/* Đặt kiểu cho bảng */
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  border-collapse: collapse;
+}
+
+/* Đặt kiểu cho các dòng trong bảng */
+.table tr {
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+/* Đặt kiểu cho các hàng khi hover */
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Đặt kiểu cho các tiêu đề cột */
+.table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* Đặt kiểu cho ô dữ liệu trong bảng */
+.table td {
+  padding: 0.75rem 0;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  text-align: left;
+}
+
+/* Đặt kiểu cho bảng bordered */
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+/* Đặt kiểu cho tiêu đề cột trong bảng bordered */
+.table-bordered th {
+  border: 1px solid #dee2e6;
+}
+
+/* Đặt kiểu cho các ô dữ liệu trong bảng bordered */
+.table-bordered td {
+  border: 1px solid #f5f5f5;
+}
+
+tr img {
+  width: 45px;
+  height: 35px;
+  padding-left: 5px;
+}
+
+.tb-ten {
+  width: 250px;
+  max-height: 60px;
+  /* Đặt chiều cao tối đa, thay đổi giá trị này theo nhu cầu của bạn */
+  overflow-y: auto;
+  /* Bật thanh cuộn dọc khi cần thiết */
+}
+
+td p {
+  margin: 0;
+  padding-right: 15px;
+  max-height: 50px;
+}
+
+.tb-tien {
+  width: 200px;
+  font-weight: 550;
+}
+
+.tb-tien u {
+  color: orange;
+}
+
+.tb-soluong input {
+  width: 20px;
+}
+
+.tb-anh {
+  width: 150px;
+}
+
+.huyDon {
+  margin-left: 240px;
+  margin-top: 10px;
+}
+
+.huyDon h3,
+.huyDon p {
+  display: inline;
+  /* hoặc display: inline-block; */
+  margin: 0;
+  /* Loại bỏ khoảng trắng mặc định giữa các phần tử inline */
+}

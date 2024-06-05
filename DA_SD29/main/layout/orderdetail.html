@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/main/css/orderDetail.css">
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="orderDetail">
+        <h3 class="title">Chi tiết đơn hàng</h3>
+        <div class="back" ng-click="backUser()">
+            <i class='bx bx-arrow-back'></i>
+            <h4>Trở lại</h4>
+        </div>
+        <div class="order-address">
+            <div class="form-thongtin">
+                <span class="content-left">
+                    <div>
+                        <label>Tên </label><br>
+                        <input ng-model="localStorageOrder.address.username" disabled="true" class="custom-input" type="text" placeholder="Your Name">
+                    </div>
+                    <div>
+                        <label>Email </label><br>
+                        <input ng-model="localStorageOrder.address.email" disabled="true" class="custom-input" type="text" placeholder="Your Email">
+                    </div>
+                </span>
+                <div class="form-thongtin-diachi">
+                    <label>Địa chỉ nhận hàng </label><br>
+                    <input ng-model="addressAll" disabled="true" class="custom-input" type="text" placeholder="Điền địa chỉ nhận hàng">
+                </div>
+                <span class="content-left">
+                    <div>
+                        <label>Điện thoại </label><br>
+                        <input ng-model="localStorageOrder.address.phone" disabled="true" class="custom-input" type="text" placeholder="Your Email">
+                    </div>
+                    <div>
+                        <label>Ngày đặt hàng(mm/dd/yyyy) </label><br>
+                        <input ng-model="ngaydathang" disabled="true" class="custom-input" type="date">
+                    </div>
+                </span>
+                <span class="content-left" ng-if="localStorageOrder.status === 3">
+                    <div>
+                        <label>Ngày hủy(mm/dd/yyyy) </label><br>
+                        <input ng-model="ngayhuy" disabled="true" class="custom-input" type="date">
+                    </div>
+                </span>
+            </div>
+        </div>
+        <div class="huyDon" ng-if="localStorageOrder.status === 3">
+            <h3>Lý do hủy đơn: <p style="font-size: 15px;">{{localStorageOrder.mota}}</p></h3>
+        </div>
+        <div class="tongbill">
+            <h4>Tổng giá trị đơn hàng</h4>
+            <h4>{{localStorageOrder.total_money}}&nbsp;&nbsp;<u>VND</u></h4>
+        </div>
+        <div class="table-product">
+            <table class="table table-hover">
+                <thead>
+                    <th>Sản phẩm</th>
+                    <th>Tên</th>
+                    <th>Size</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ordd in orderDetail">
+                        <!-- <td ><img src="/image/images/shoe-2.png" alt=""></td> -->
+                        <td class="tb-anh">
+                            <div ng-repeat="image in ordd.watchdetail.images">
+                                <img src="/image/images/{{image.image_link}}" alt="">
+                            </div>
+                        </td>
+                        <td class="tb-ten">
+                            <p>
+                                {{ordd.watchdetail.product.name}}
+                            </p>
+                        </td>
+                        <td class="tb-ten">
+                            <p>
+                                {{ordd.watchdetail.size.name}}
+                            </p>
+                        </td>
+                        <td class="tb-tien" style="max-width: 200px;" ng-show="ordd.giamgia">
+                            <p>
+                                {{ordd.watchdetail.price *(100-ordd.giamgia)/100}}&nbsp;<u>VND</u>
+                            </p>
+                            <p style="font-size: 13px;">-{{ordd.giamgia}}%</p>
+                        </td>
+                        <td class="tb-tien" style="max-width: 200px;" ng-show="!ordd.giamgia">
+                            <p>
+                                {{ordd.watchdetail.price}}&nbsp;<u>VND</u>
+                            </p>
+                        </td>
+                        <td class="tb-soluong">
+                            <div class="wrapper" style="width: 150px;min-width: 150px;">
+                                <input class="custom-input" type="text" disabled ng-model="ordd.quantity" />
+                            </div>
+                        </td>
+                        <td class="tb-tien" ng-show="ordd.giamgia">
+                            <p>
+                                {{(ordd.watchdetail.price *(100-ordd.giamgia)/100)*ordd.quantity}}&nbsp;<u>VND</u>
+                            </p>
+                        </td>
+                        <td class="tb-tien" ng-show="!ordd.giamgia">
+                            <p>
+                                {{ordd.quantity*ordd.watchdetail.price}}&nbsp;<u>VND</u>
+                            </p>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

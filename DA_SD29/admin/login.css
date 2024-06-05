@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+body {
+    /* border-top: #0188ff solid; */
+    font-family: 'Quicksand', sans-serif;
+    /* color: #F5F7FF; */
+}
+.login{
+    margin-left: 200px;
+}
+.login h2{
+    margin-top: 25px;
+    margin-bottom: 35px;
+    margin-right: 50px;
+    margin-left: 50px;
+    border-bottom: 1px dotted black;
+}
+
+.login-1{
+    margin: 0 8rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.form-login{
+    width: 480px;
+    background-color: #eaf2fe;
+    padding: 1rem 2rem;
+    height: 330px;
+}
+
+.form-login ul{
+    padding: 1rem 1.5rem;
+}
+
+.form-login ul li{
+    padding: 0.25rem 0;
+}
+
+.contact-left{
+    align-items: center;
+    text-align: start;
+    justify-content: start;
+}
+
+
+.contact-left div{
+    margin-right: 1rem;
+    margin-bottom: 15px;
+    margin-top: 25px;
+}
+
+.contact-left div span{
+    color: red;
+    font-size: 14px;
+}
+
+
+.custom-input{
+    display: block;
+    width: 400px;
+    height: 20px;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-input:hover{
+    border-color: #007bff; 
+    box-shadow: 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+}
+.custom-input:focus {
+    border: 1px solid #007bff;
+    box-shadow: 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+label{
+    font-weight: 700;
+}
+
+.btn-login{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    color: white;
+    background-color: #0156FF;
+    border-radius: 25px;
+    outline: none;
+    width: 135px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;   
+    font-size: 14px; 
+    font-weight: 550;
+    border: none;
+    margin-left: 7px;
+}
+
+.btn-login:hover{
+    opacity: 0.9;
+    filter: brightness(110%);
+    cursor: pointer;
+}
+
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.button p{
+    margin-left: 2rem;
+    color: #0188ff;
+    cursor: pointer;
+}
+
+
+.btn-regis{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    color: white;
+    background-color: #0156FF;
+    border-radius: 25px;
+    outline: none;
+    width: 135px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;   
+    font-size: 14px; 
+    font-weight: 550;
+    border: none;
+    margin-left: 15px;
+}
+
+.btn-regis:hover{
+    opacity: 0.9;
+    filter: brightness(110%);
+    cursor: pointer;
+}

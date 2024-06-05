@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán</title>
+    <link rel="stylesheet" href="/main/css/payment.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<body>
+    <div class="peyment">
+        <div class="peyment-left">
+            <div class="diachithanhtoan">
+                <h3 class="title">Địa chỉ nhận hàng</h3>
+                <h4 class="edit" ng-click="editAddress()">Edit</h4>
+                <div title="Click để chọn" class="address-saved">
+                    <label>Địa chỉ {{localStorageAddress.indexAddress}}</label>
+                    <div>
+                        <p>{{localStorageAddress.username}}</p>
+                        <p>{{localStorageAddress.address_detail}},
+                            {{localStorageAddress.town_code}},
+                            {{localStorageAddress.district_code}},
+                            {{localStorageAddress.province_code}}</p>
+                        <p>{{localStorageAddress.email}}</p>
+                        <p>{{localStorageAddress.phone}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="phuongthucthanhtoan">
+                <h3>Hình thức thanh toán</h3>
+                <div>
+                    <label class="container-radio" ng-repeat="option in thanhtoan"
+                        ng-if="option.name === 'Thanh toán khi nhận hàng'">
+                        {{ option.name }}
+                        <input type="radio" ng-model="selectedPayment" ng-value="option" name="radio"
+                            ng-click="showPaymentName(option)">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <button class="btn-dathang" ng-click="placeOrder()">Đặt hàng</button>
+            </div>
+        </div>
+        <div class="peyment-right">
+            <div class="right">
+                <h2>Thông tin đơn hàng</h2>
+                <h4 class="edit-hoadon" ng-click="editCart()">Edit</h4>
+                <div class="tongtien-thanhtoan">
+                    <div>
+                        <span class="title">Tổng tiền</span>
+                        <!-- <span class="value">{{calculateTotal() | number:2}} <u>VND</u></span> -->
+                        <span class="value">{{calculateTotal()}} <u>VND</u></span>
+                    </div>
+                    <!-- <div>
+                        <span class="title">Phí giao hàng</span>
+                        <span class="value">50.000 <u>VND</u></span>
+                    </div> -->
+                    <div style="margin-top: 10px; margin-bottom: 15px;">
+                        <span class="title">Thành tiền</span>
+                        <!-- <span class="value">{{calculateTotal() | number:2}} <u>VND</u></span> -->
+                        <span class="value">{{calculateTotal()}} <u>VND</u></span>
+                    </div>
+                </div>
+                <h4 ng-if="cartNow.id === undefined">{{cart.length}} sản phẩm</h4>
+                <h4 ng-if="cartNow.id">{{cartNow.quantity}} sản phẩm</h4>
+                <div class="tong-sanpham">
+                    <!-- <div class="sanpham" ng-repeat="sp in cart">
+                        <div class="image" ng-repeat="image in sp.images">
+                            <img src="/image/images/{{image.image_link}}.png" alt="">
+                        </div>
+                        <div>
+                            <h4>{{sp.product.name}}</h4>
+                            <ul>
+                                <li>Size: {{sp.size.name}}</li>
+                                <li>Color: {{sp.casecolor.name}} </li>
+                                <li>Qty: {{sp.quantity}}&nbsp;&nbsp;&nbsp;{{sp.price}} <u>VND</u></li>
+                                <li>{{sp.quantity*sp.price}} <u>VND</u></li>
+                            </ul>
+                        </div>
+                    </div> -->
+                    <div ng-if="cartNow.id === undefined">
+                        <div class="sanpham" ng-repeat="sp in cart">
+                            <div class="image" ng-repeat="image in sp.images">
+                                <img src="/image/images/{{image.image_link}}" alt="">
+                            </div>
+                            <div>
+                                <h4>{{sp.product.name}}</h4>
+                                <ul>
+                                    <li>Size: {{sp.size.name}}</li>
+                                    <li>Color: {{sp.casecolor.name}} </li>
+                                    <li ng-show="!sp.giamoi">Qty: {{sp.quantity}}&nbsp;&nbsp;&nbsp;{{sp.price}}
+                                        <u>VND</u>
+                                    </li>
+                                    <li ng-show="!sp.giamoi">{{sp.quantity*sp.price}} <u>VND</u></li>
+                                    <li ng-show="sp.giamoi">Qty: {{sp.quantity}}&nbsp;&nbsp;&nbsp;{{sp.giamoi}}
+                                        <u>VND</u>
+                                    </li>
+                                    <li ng-show="sp.giamoi">{{sp.quantity*sp.giamoi}} <u>VND</u></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="cartNow.id !== undefined">
+                        <div class="sanpham">
+                            <div class="image">
+                                <img src="/image/images/{{cartNow.images[0].image_link}}" alt="">
+                            </div>
+                            <div>
+                                <h4>{{cartNow.product.name}}</h4>
+                                <ul>
+                                    <li ng-show="!cartNow.giamoi">Qty:
+                                        {{cartNow.quantity}}&nbsp;&nbsp;&nbsp;{{cartNow.price}} <u>VND</u></li>
+                                    <li ng-show="!cartNow.giamoi">{{cartNow.quantity*cartNow.price}} <u>VND</u></li>
+                                    <li ng-show="cartNow.giamoi">Qty:
+                                        {{cartNow.quantity}}&nbsp;&nbsp;&nbsp;{{cartNow.giamoi}} <u>VND</u></li>
+                                    <li ng-show="cartNow.giamoi">{{cartNow.quantity*cartNow.giamoi}} <u>VND</u></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

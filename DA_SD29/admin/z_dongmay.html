@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thương hiệu</title>
+    <link rel="stylesheet" href="thuonghieu.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Quản lý Dòng Máy</h1>
+                </div>
+                <a ng-click="openDongMay()" class="report" id="openPopup" style="cursor: pointer;">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span >Thêm dòng máy</span>
+                </a>
+            </div>
+            <!-- Popup -->
+            <div class="popup" id="popup" ng-show="themDongMay">
+                <div class="popup-content">
+                    <span class="close" id="closePopup" ng-click="closeDongMay()">&times;</span>
+                    <h2>Thêm dòng máy</h2>
+                    <form class="form-popup">
+                        <div>
+                            <h4>Tên</h4>
+                            <input type="text" class="custom-input" placeholder="Điền dòng máy mới" ng-model="nameDongMay">
+                        </div>
+                        <span style="color: red; font-size: 13px;" ng-show="errorDongMay">Đã tồn tại</span>
+                        <div class="button">
+                            <button ng-click="addDongMay()">Thêm mới</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="popup" id="popup" ng-show="capnhapDongMay">
+                <div class="popup-content">
+                    <span class="close" id="closePopup" ng-click="closeUpdateDongMay()">&times;</span>
+                    <h2>Cập nhập dòng máy</h2>
+                    <form class="form-popup">
+                        <div>
+                            <h4>Giá trị cũ - {{dongmayCapNhap.name}}</h4>
+                            <input type="text" class="custom-input" placeholder="Điền giá trị mới" ng-model="nameDongMayUpdate">
+                        </div>
+                        <span style="color: red; font-size: 13px;" ng-show="errorDongMayUpdate">Đã tồn tại</span>
+                        <div class="button">
+                            <button ng-click="updateDongMay()">Cập nhập</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- End popup -->
+
+            <!-- <div class="tab-product">
+                <ul>
+                    <li onclick="showDanhSachThuocTinh()" class="active">Danh sách thương hiệu</li>
+                    <li onclick="showThuocTinhTrong()">Thương hiệu trống</li>
+                </ul>
+            </div> -->
+            <div class="danhsach-thuoctinh">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Danh sách</h3>
+                            <!-- <div class="tienich">
+                                <div class="search-product" id="search-container">
+                                    <p></p>
+                                    <input type="text" placeholder="Điền sản phẩm cần tìm">
+                                    <i class='bx bx-search' id="search-icon"></i>
+                                </div>
+                                <i class='bx bx-x' id="close-icon"></i>
+                            </div> -->
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="dongmay in dongmays">
+                                    <td>
+                                        <p>{{dongmay.name}}</p>
+                                    </td>
+                                    <td>
+                                        <h4 style="color: #0188ff;" ng-click="openUpdateDongMay(dongmay)">Chỉnh sửa</h4>
+                                    </td>
+                                    <td ng-if="dongmay.notXoa !== true ">
+                                        <h4 style="color: #0188ff;" ng-click="xoaDongMay(dongmay)">Xóa</h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

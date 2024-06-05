@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+body {
+    /* border-top: #0188ff solid; */
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+}
+
+.title-checkout{
+    text-align: center;
+    padding-right: 50px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.checkout{
+    display: flex;
+    margin: 0 2rem;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.checkout>div{
+    text-align: center;
+    align-items: start;
+}
+.checkout>div>h4{
+   margin-top: 5px;
+   padding-top: 0;
+}
+
+.right-checkout{
+    border-left: 1px solid rgb(182, 182, 182);
+    padding-left: 25px !important;
+}
+.left-checkout{
+    padding-right: 25px !important;
+}
+
+.button{
+    display: flex;
+    flex-direction: column;
+    grid-gap: 15px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+button{
+    width: 120px;
+    height: 25px;
+    background: none;
+    border-radius: 25px;
+    outline: none;
+    border:1px solid #0188ff;
+    color: #0188ff;
+    font-size: 13px;
+    font-weight: 550;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #0188ff;
+    border: none;
+    color: white;
+}

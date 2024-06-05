@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="/main/css/cart.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<body>
+    <div class="cart">
+        <div class="cart-1">
+            <h2>Shopping Cart</h2>
+        </div>
+        <div class="cart-2">
+            <div class="cart-left">
+                <div class="cart-left-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>Sản phẩm</th>
+                            <th>Tên</th>
+                            <th>Kích cỡ</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng tiền</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in cart">
+                                <td>
+                                    <div class="image" ng-repeat="image in product.images">
+                                        <img src="/image/images/{{image.image_link}}" alt="">
+                                    </div>
+                                </td>
+                                <td class="tb-ten">
+                                    <p>
+                                        {{product.product.name}}
+                                    </p>
+                                </td>
+                                <td class="tb-size">
+                                    <p>
+                                        {{product.size.name}}
+                                    </p>
+                                </td>
+                                <td class="tb-tien">
+                                    <p ng-show="product.giamoi">
+                                        {{product.giamoi | number:2}} <u>VND</u>
+                                    </p>
+                                    <p style="color: gray; font-size: 13px; margin-top: 5px;" ng-show="product.giamoi">Chiết khấu {{product.giamgia}}</p>
+                                    <p ng-show="!product.giamoi">
+                                        {{product.price | number:2}} <u>VND</u>
+                                    </p>
+                                </td> 
+                                <!-- <td class="tb-soluong">
+                                    <div class="wrapper">
+                                        <input type="number" value="{{product.quantity}}" /><span class="input-button add">+</span><span
+                                            class="input-button remove">-</span>
+                                        <div class="infos">
+                                            Nhấn shift để tăng nhiều
+                                        </div>
+                                    </div>
+                                </td> -->
+                                <td class="tb-soluong">
+                                    <div class="wrapper">
+                                        <input value="{{product.quantity}}" type="number"
+                                            ng-model="product.quantity"/>
+                                            <span class="input-button add" ng-attr-title="{{ showSoLuongLoi ? 'Số lượng không được vượt quá số lượng có thể bán' : '' }}"
+                                            ng-click="increaseQuantity(product)" ng-class="{ 'disabled': showSoLuongLoi }">+</span>
+                                            <span class="input-button remove" ng-click="decreaseQuantity(product)">-</span>
+                                        <div class="infos">
+                                            Nhấn shift để tăng nhiều
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="tb-tien" ng-show="product.giamoi">
+                                    <p>
+                                        {{product.giamoi * product.quantity | number:2}} <u>VND</u>
+                                    </p>
+                                </td>
+                                <td class="tb-tien" ng-show="!product.giamoi">
+                                    <p>
+                                        {{product.price * product.quantity | number:2}} <u>VND</u>
+                                    </p>
+                                </td>
+                                <td class="tb-action">
+                                    <div>
+                                        <i class='bx bxs-x-circle' title="Xóa khỏi giỏ hàng"
+                                            ng-click="removeFromCart(product.id)"></i>
+                                        <i class='bx bx-heart-circle' title="Thêm vào danh sách yêu thích"></i>
+                                        <i class='bx bx-right-arrow-circle' title="Mua ngay"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="button-table">
+                    <button id="button-continue"><a href="#home">Tiếp tục mua hàng</a></button>
+                    <button id="button-delete" ng-click="clearCart()">Xóa tất cả sản phẩm</button>
+                </div>
+            </div>
+            <div class="cart-right">
+                <div class="content-right">
+                    <h2>Thông tin giỏ hàng</h2>
+                    <!-- <div class="thongtin-thanhtoan">
+                        <h3 id="content_thongtin_thanhtoan">Thông tin nhận hàng <i class='bx bx-chevron-up'></i></h3>
+                        <p>Thay đổi thông tin nhận hàng ở đây</p>
+                        <div id="dropdown_thongtin_thanhtoan">
+                            <div>
+                                <label>Người nhận <span>*</span></label><br>
+                                <input class="custom-input" type="text" placeholder="Tên người nhận">
+                            </div>
+                            <div>
+                                <label>Điện thoại nhận <span>*</span></label><br>
+                                <input class="custom-input" type="text" placeholder="Số điện thoại người nhận">
+                            </div>
+                            <div>
+                                <label>Địa chỉ nhận <span>*</span></label><br>
+                                <input class="custom-input" type="text" placeholder="Địa chỉ người nhận">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="magiamgia-thanhtoan">
+                        <h3 id="content_magiamgia_thanhtoan">Mã giảm giá <i class='bx bx-chevron-up'></i></h3>
+                        <p>Áp dụng mã giảm giá ở đây</p>
+                        <div id="dropdown_magiamgia_thanhtoan">
+                            <div>
+                                <label>Áp dụng giảm giá</label><br>
+                                <input class="custom-input" type="text" placeholder="Mã giảm giá">
+                            </div>
+                            <button>Áp dụng</button>
+                        </div>
+                    </div> -->
+                    <div class="tongtien-thanhtoan">
+                        <!-- <div>
+                            <span class="title">Tổng tiền</span>
+                            <span class="value">13.000.000 <u>VND</u></span>
+                        </div>
+                        <div>
+                            <span class="title">Phí giao hàng</span>
+                            <span class="value">50.000 <u>VND</u></span>
+                        </div> -->
+                        <div>
+                            <span class="title">Tổng tiền</span>
+                            <span class="value">{{calculateTotal() | number:2}}<u>VND</u></span>
+                        </div>
+                    </div>
+                    <div class="button">
+                        <!-- <button class="button-on">Thanh toán với <img src="/image/images/visa.png"> -->
+                        </button>
+                        <button class="button-off" ng-click="checkout()">Tiếp tục thanh toán</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+
+
+        // var thongtin_thanhtoan = document.getElementById("content_thongtin_thanhtoan");
+        // var dropdown_thongtin_thanhtoan = document.getElementById("dropdown_thongtin_thanhtoan");
+        // var isDropdownVisible = false; // Trạng thái hiển thị ban đầu
+
+        // thongtin_thanhtoan.addEventListener("click", function () {
+        //     if (isDropdownVisible) {
+        //         dropdown_thongtin_thanhtoan.style.display = "none"; // Ẩn nội dung nếu đã hiển thị
+        //     } else {
+        //         dropdown_thongtin_thanhtoan.style.display = "block"; // Hiển thị nội dung nếu chưa hiển thị
+        //     }
+        //     isDropdownVisible = !isDropdownVisible; // Đảo ngược trạng thái hiển thị
+        // });
+
+
+    </script>
+</body>
+
+</html>

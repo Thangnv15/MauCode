@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+body {
+    /* border-top: #0188ff solid; */
+    font-family: 'Quicksand', sans-serif;
+}
+
+.container_navbar *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container_navbar {
+    height: 100px;
+    background-color: #fff;
+    color: black;
+    display: flex; /* Thêm display: flex để căn giữa nội dung trong .container */
+    align-items: center; /* Căn giữa theo chiều dọc trong .container */
+    justify-content: center;
+    border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+.content_left_navbar {
+    float: left;
+    position: relative;
+    padding-right: 50px;
+}
+
+.danhmuc_list_navbar {
+    list-style: none;
+    float: left;
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc trong .danhmuc_list_navbar */
+    padding: 0px;
+}
+
+.danhmuc_list_navbar li {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 15px;
+    justify-content: space-between;
+    align-items: center; /* Căn giữa theo chiều dọc trong li */
+    transition: all 0.5s ease;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+.danhmuc_list_navbar li i{
+    font-size: 25px;
+}
+
+.danhmuc_list_navbar>li a {
+   text-decoration: none;
+   color: black;
+}
+
+.danhmuc_list_navbar li:not(:first-child):hover{
+    transform: scale(1.03);
+    border: 2px solid #0156FF;
+    border-radius: 25px;
+    color: #0156FF;
+    cursor: pointer;
+}
+
+.content_right_navbar {
+    float: right;
+    padding-left: 100px;
+
+}
+
+.danhmuc_right_list_navbar {
+    float: left;
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc trong .danhmuc_list_navbar */
+}
+
+.danhmuc_right_list_navbar li {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 15px;
+    justify-content: space-between;
+    align-items: center; /* Căn giữa theo chiều dọc trong li */
+    transition: all 0.5s ease;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+.danhmuc_right_list_navbar li i{
+    font-size: 25px;
+}
+
+.danhmuc_right_list_navbar li:hover{
+    transform: scale(1.03);
+    border: 2px solid #0156FF;
+    border-radius: 25px;
+    color: #0156FF;
+    cursor: pointer;
+}
+.danhmuc_right_list_navbar li a{
+    text-decoration: none;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+.danhmuc_right_list_navbar li h4{
+    margin-right: 15px;
+}
+
+.search_input_navbar {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 5px;
+    width: 0;
+    transition: width 0.4s ease;
+}
+
+/* Bagde cart */
+.icon-cart{
+    position: relative;
+}
+
+.badge-cart{
+    position: absolute;
+    top: 0;
+    right: 5%;
+    width: 20px;
+    height: 20px;
+    background-color: #0188ff;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    color: white;
+}
+
+.thongbao{
+    position: absolute;
+    top: 45px;
+    right: 20%;
+    border-radius: 15px;
+    background-color: white;
+    width: 300px;
+    z-index: 999;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-height: 350px;
+    overflow-y: auto;
+}
+

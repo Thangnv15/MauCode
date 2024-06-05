@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="productAdmin.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Trước khi gọi script của FileSaver -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+</head>
+
+<body>
+    <!-- End of Navbar -->
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Quản lý sản phẩm</h1>
+                    <!-- <ul class="breadcrumb">
+                        <li><a href="#">
+                                Analytics
+                            </a></li>
+                        /
+                        <li><a href="#" class="active">Shop</a></li>
+                    </ul> -->
+                </div>
+                <a class="report" id="openPopup">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span>Thêm sản phẩm</span>
+                </a>
+            </div>
+            <!-- Popup -->
+            <div class="popup" id="productPopup">
+                <div class="popup-content">
+                    <span class="close" id="closePopup">&times;</span>
+                    <h2>Thêm sản phẩm</h2>
+                    <form class="form-sanpham">
+                        <div class="form-left">
+                            <div class="image-product">
+                                <h3 ng-show="!imageFile">Chọn ảnh cho sản phẩm</h3>
+                                <i class='bx bx-image-add' ng-show="!imageFile" ng-click="selectImage()"></i>
+                                <input ng-model="sanpham.image" type="file" id="fileInput" accept="image/*"
+                                    style="display: none" />
+                                <img ng-src="{{imagePreview}}" alt="Preview" ng-show="imagePreview" />
+                                <i class='bx bx-trash' ng-click="deleteImage()" ng-show="imageFile"></i>
+                            </div>
+
+                            <div>
+                                <label for="">Tên sản phẩm</label>
+                                <input class="custom-input" type="text" placeholder="Điền tên" ng-model="sanpham.name"
+                                    ng-change="checkName()">
+                                <span style="color: red; font-size: 13px;" ng-show="checkNamebien">Tên đã trùng</span>
+                            </div>
+                            <div>
+                                <label for="thuong-hieu">Thương hiệu</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.brand"
+                                        ng-options="th as th.name for th in thuongHieu"
+                                        ng-change="updateSelectedValues(selectedThuongHieu, selectedValuesThuongHieu)">
+                                        <option value="">Chọn thương hiệu</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('thuonghieu')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('thuonghieu')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Thương hiệu</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('thuonghieu')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input"
+                                                        placeholder="Điền tên thương hiệu" ng-model="nameThuongHieu">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorThuongHieu">Đã
+                                                    tồn tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiThuongHieu()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="size-mat">Size mặt</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.kichCo"
+                                        ng-options="size as size.name for size in sizeMat"
+                                        ng-change="updateSelectedValues(sanpham.kichCo, selectedValues)">
+                                        <option value="">Chọn Size mặt</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('sizemat')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('sizemat')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Size mặt</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('sizemat')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền kích cỡ"
+                                                        ng-model="nameSize">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorSize">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiSizemat()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Giới tính</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.gender"
+                                        ng-options="gt as gt.name for gt in gender"
+                                        ng-change="updateSelectedValues(selectedGioiTinh, selectedValuesGioiTinh)">
+                                        <option value="">Chọn Giới tính</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('gioitinh')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('gioitinh')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Giới tính</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('gioitinh')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền giới tính"
+                                                        ng-model="nameGioiTinh">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorGender">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiGioiTinh()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Dòng máy</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.machinetype"
+                                        ng-options="mt as mt.name for mt in machineType"
+                                        ng-change="updateSelectedValues(selectedDongmay, selectedValuesDongMay)">
+                                        <option value="">Chọn Dòng máy</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('dongmay')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('dongmay')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Dòng máy</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('dongmay')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền dòng máy"
+                                                        ng-model="nameDongMay">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorDongmay">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiDongMay()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Chất liệu dây</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.strap"
+                                        ng-options="str as str.name for str in strap"
+                                        ng-change="updateSelectedValues(selectedChatLieuDay, selectedValues_ChatLieuDay)">
+                                        <option value="">Chọn Loại dây</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('chatlieuday')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('chatlieuday')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Chất liệu dây</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('chatlieuday')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input"
+                                                        placeholder="Điền Chất liệu dây" ng-model="nameChatLieuDay">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorChatlieuday">Đã
+                                                    tồn tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiChatlieuday()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Chất liệu kính</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.glassmaterial"
+                                        ng-options="gm as gm.name for gm in glassMaterial"
+                                        ng-change="updateSelectedValues(selectedChatLieuKinh, selectedValues_ChatLieuKinh)">
+                                        <option value="">Chọn Loại kính</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('chatlieukinh')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('chatlieukinh')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Chất liệu kính</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('chatlieukinh')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input"
+                                                        placeholder="Điền chất liệu kính" ng-model="nameChatLieuKinh">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorChatlieukinh">Đã
+                                                    tồn tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiChatlieukinh()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Tính năng</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.feature"
+                                        ng-options="tn as tn.name for tn in feature"
+                                        ng-change="updateSelectedValues(selectedTinhNang, selectedValues_TinhNang)">
+                                        <option value="">Chọn Tính năng</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('tinhnang')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('tinhnang')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Tính năng</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('tinhnang')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền Tính năng"
+                                                        ng-model="nameTinhNang">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorTinhnang">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiTinhnang()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Xuất xứ</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.origin"
+                                        ng-options="or as or.name for or in origin"
+                                        ng-change="updateSelectedValues(selectedXuatXu, selectedValues_XuatXu)">
+                                        <option value="">Chọn xuất xứ</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('xuatxu')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('xuatxu')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Xuất xứ</h3>
+                                            <span class="close-thuoctinh" ng-click="closePopup('xuatxu')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền Xuất xứ"
+                                                        ng-model="nameXuatXu">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorXuatxu">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiXuatxu()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Hình dạng</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.shape"
+                                        ng-options="sh as sh.name for sh in shape"
+                                        ng-change="updateSelectedValues(selectedHinhDang, selectedValues_HinhDang)">
+                                        <option value="">Chọn hình dạng</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('hinhdang')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('hinhdang')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Hình dạng</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('hinhdang')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền hình dạng"
+                                                        ng-model="nameHinhDang">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorHinhdang">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiHinhdang()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="">Màu vỏ</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.casecolor"
+                                        ng-options="cc as cc.name for cc in caseColor"
+                                        ng-change="updateSelectedValues(selectedMauVo, selectedValues_MauVo)">
+                                        <option value="">Chọn màu vỏ</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('mauvo')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('mauvo')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Màu vỏ</h3>
+                                            <span class="close-thuoctinh" ng-click="closePopup('mauvo')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền màu vỏ"
+                                                        ng-model="nameMauVo">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorMauvo">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiMauvo()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Chất liệu vỏ</label>
+                                <div>
+                                    <select class="custom-input" ng-model="sanpham.casematerial"
+                                        ng-options="cm as cm.name for cm in caseMaterial"
+                                        ng-change="updateSelectedValues(selectedChatLieuVo, selectedValues_ChatLieuVo)">
+                                        <option value="">Chọn chất liệu vỏ</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('chatlieuvo')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('chatlieuvo')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Chất liệu vỏ</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('chatlieuvo')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input"
+                                                        placeholder="Điền chất liệu vỏ" ng-model="nameChatLieuVo">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorChatlieuvo">Đã
+                                                    tồn tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiChatlieuvo()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-right">
+                            <div class="form-right-thuoctinh">
+                                <div class="form-right-thuoctinh-header" id="thuoctinh-header">
+                                    <h3>Thuộc tính</h3>
+                                    <i ng-click="toggleContent()" class="bx bxs-chevron-down" ng-show="showContent"
+                                        style="color: black"></i>
+                                    <i ng-click="toggleContent()" class="bx bxs-chevron-up" ng-hide="showContent"
+                                        style="color: black"></i>
+                                </div>
+                                <div class="form-right-thuoctinh-noidung" ng-show="showContent">
+                                    <ul>
+                                        <li>
+                                            <!-- <div class="selected-values" id="selected-values-sizemat">
+                                                <h3>Size mặt: </h3>
+                                            </div> -->
+                                            <h3>Size mặt: </h3>
+                                            <div class="selected-values">
+                                                <span ng-repeat="selectedSizeMat in selectedValues"
+                                                    class="selected-value"
+                                                    ng-click="deleteSelectedValue(selectedSizeMat, selectedValues)">{{
+                                                    selectedSizeMat.name }}</span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-right-image">
+                                <div class="form-right-image-header" id="image-header">
+                                    <h3>Danh sách sản phẩm cùng loại</h3>
+                                    <i ng-click="toggleImageContent()" class="bx bxs-chevron-down"
+                                        ng-show="showImageContent" style="color: black"></i>
+                                    <i ng-click="toggleImageContent()" class="bx bxs-chevron-up"
+                                        ng-hide="showImageContent" style="color: black"></i>
+                                </div>
+                                <div class="form-right-image-noidung" ng-show="showImageContent">
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <input class="custom-input" type="text" placeholder="Mã sản phẩm"
+                                            ng-model="hlma">
+                                        <input class="custom-input" type="text" placeholder="Giá bán" ng-model="hlban">
+                                        <input class="custom-input" type="text" placeholder="Giá nhập"
+                                            ng-model="hlnhap">
+                                        <input class="custom-input" type="text" placeholder="Số lượng" ng-model="hlsl">
+                                        <div class="button">
+                                            <button ng-click="updateHangLoat()"
+                                                style="width: 200px; margin-top: -10px;">Cập nhập hàng loạt</button>
+                                        </div>
+                                    </div>
+                                    <div class="bottom-data">
+                                        <div class="orders">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Kích thước</th>
+                                                        <th style="padding-left: 15px;">Mã sản phẩm</th>
+                                                        <th>Giá bán</th>
+                                                        <th>Giá nhập</th>
+                                                        <th>Số lượng tồn</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="product in productList" class="generationList">
+                                                        <td ng-model="product.size">{{product.size.name}}</td>
+                                                        <td style="display: flex;flex-direction: column;">
+                                                            <input ng-model="product.code" class="custom-input"
+                                                                type="text" placeholder="Điền mã sản phẩm"
+                                                                ng-change="checkCode(product)">
+                                                            <span style="color: red; font-size: 13px;"
+                                                                ng-show="product.checkCodeError">Mã đã tồn tại</span>
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="product.price" class="custom-input"
+                                                                type="text" placeholder="Điền giá bán"
+                                                                ng-change="checkGiaBan(product)">
+                                                            <span style="color: red; font-size: 13px;"
+                                                                ng-show="product.checkGiaBanError">Giá bán không hợp
+                                                                lệ</span>
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="product.price_im" class="custom-input"
+                                                                type="text" placeholder="Điền giá nhập"
+                                                                ng-change="checkGiaNhap(product)">
+                                                            <span style="color: red; font-size: 13px;"
+                                                                ng-show="product.checkGiaNhapError">Giá nhập không hợp
+                                                                lệ</span>
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="product.quantity_stock"
+                                                                class="custom-input" type="text"
+                                                                placeholder="Điền số lượng tồn"
+                                                                ng-change="checkSo(product)">
+                                                            <span style="color: red; font-size: 13px;"
+                                                                ng-show="product.checkSoError">Số lượng không hợp
+                                                                lệ</span>
+                                                        </td>
+                                                        <td><i class='bx bx-trash'
+                                                                ng-click="deleteProduct(product)"></i></td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="button">
+                        <button ng-click="addProducts()">Thêm</button>
+                        <button ng-click="resetProducts()">Làm mới</button>
+                    </div>
+                </div>
+            </div>
+            <!-- End popup -->
+
+            <div class="tab-product">
+                <ul>
+                    <li ng-click="selectTab('danhsach')" ng-class="{active: currentTab === 'danhsach'}">Danh sách Sản
+                        phẩm</li>
+                    <li ng-click="selectTab('soLuongTon')" ng-class="{active: currentTab === 'soLuongTon'}">Hết số lượng
+                        tồn</li>
+                    <li ng-click="selectTab('ngungHoatDong')" ng-class="{active: currentTab === 'ngungHoatDong'}">Ngừng
+                        hoạt động</li>
+                </ul>
+            </div>
+
+            <div class="danhsach-product" ng-show="currentTab === 'danhsach'">
+                <!-- Insights -->
+                <ul class="insights">
+                    <li>
+                        <i class='bx bx-calendar-check'></i>
+                        <span class="info">
+                            <h3>
+                                {{product.length}}
+                            </h3>
+                            <p>Tổng sản phẩm</p>
+                        </span>
+                    </li>
+                    <li><i class='bx bx-notification-off'></i>
+                        <span class="info">
+                            <h3>
+                                {{countHetHang}}
+                            </h3>
+                            <p>Hết hàng</p>
+                        </span>
+                    </li>
+                    <li><i class='bx bx-library'></i>
+                        <span class="info">
+                            <h3>
+                                {{watchsOrdinalConstant.length}}
+                            </h3>
+                            <p>Tổng mặt hàng</p>
+                        </span>
+                    </li>
+                    <li><i class='bx bxs-credit-card-front'></i>
+                        <span class="info">
+                            <h3>
+                                {{thuongHieu.length}}
+                            </h3>
+                            <p>Loại sản phẩm</p>
+                        </span>
+                    </li>
+                </ul>
+                <!-- End of Insights -->
+
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Danh sách sản phẩm</h3>
+                            <div class="tienich">
+                                <div style="position: relative;">
+                                    <input class="input-timkiem" type="text" placeholder="Điền tên sản phẩm cần tìm"
+                                        ng-model="searchMaHD" ng-keyup="searchOrders(searchMaHD)">
+                                    <i class='bx bx-search'
+                                        style="position: absolute; right: 5px;top: 5px; font-size: 20px;"></i>
+                                </div>
+                                <div class="dropdown-tienich">
+                                    <button id="dropdown-toggle" class="btn-dropdown">
+                                        Tiện tích <i class='bx bx-chevrons-down'></i>
+                                    </button>
+                                    <ul id="dropdown-menu" class="dropdown-menu">
+                                        <input type="file" id="fileInput" ng-model="selectedFileExcel" accept=".xlsx"
+                                            style="display: none" />
+                                        <li ng-click="importFile()">
+                                            <i class='bx bx-import'></i> Nhập file
+                                        </li>
+                                        <li ng-click="exportToExcel()"><i class='bx bx-export'
+                                                style='color:black'></i>Xuất File
+                                        </li>
+                                        <li ng-click="ngungBan()"><i class='bx bx-stop-circle'
+                                                style='color:black'></i>Ngưng
+                                            bán</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="caties">
+                            <ul>
+                                <!-- <li>
+                                    <p>Size mặt:</p>
+                                    <select name="category" ng-model="selectedSizemat" ng-change="applyFilters()">
+                                        <option value="">All</option>
+                                        <option ng-repeat="size in sizeMat" value="{{ size.id }}">{{ size.name }}
+                                        </option>
+                                    </select>
+                                </li> -->
+                                <li>
+                                    <p>Thương hiệu:</p>
+                                    <select name="category" ng-model="selectedThuonghieu" ng-change="applyFilters()">
+                                        <option value="">Tất cả</option>
+                                        <option ng-repeat="th in thuongHieu" value="{{ th.id }}">{{ th.name }}</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <p>Màu vỏ:</p>
+                                    <select name="category" ng-model="selectedMauvo" ng-change="applyFilters()">
+                                        <option value="">Tất cả</option>
+                                        <option ng-repeat="cc in caseColor" value="{{ cc.id }}">{{ cc.name }}</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <p>Chất liệu vỏ:</p>
+                                    <select name="category" ng-model="selectedChatlieuvo" ng-change="applyFilters()">
+                                        <option value="">Tất cả</option>
+                                        <option ng-repeat="cm in caseMaterial" value="{{ cm.id }}">{{ cm.name }}
+                                        </option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <p>Tính năng:</p>
+                                    <select name="category" ng-model="selectedTinhnang" ng-change="applyFilters()">
+                                        <option value="">Tất cả</option>
+                                        <option ng-repeat="tn in feature" value="{{ tn.id }}">{{ tn.name }}</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <p>Chất liệu kính:</p>
+                                    <select name="category" ng-model="selectedChatlieukinh" ng-change="applyFilters()">
+                                        <option value="">Tất cả</option>
+                                        <option ng-repeat="gm in glassMaterial" value="{{ gm.id }}">{{ gm.name }}
+                                        </option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <p>Dòng máy:</p>
+                                    <select name="category" ng-model="selectedDongmay" ng-change="applyFilters()">
+                                        <option value="">Tất cả</option>
+                                        <option ng-repeat="mt in machineType" value="{{ mt.id }}">{{ mt.name }}</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <p>Xuất xứ:</p>
+                                    <select name="category" ng-model="selectedXuatxu" ng-change="applyFilters()">
+                                        <option value="">Tất cả</option>
+                                        <option ng-repeat="or in origin" value="{{ or.id }}">{{ or.name }}</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <p>Hình dạng:</p>
+                                    <select name="category" ng-model="selectedHinhdang" ng-change="applyFilters()">
+                                        <option value="">Tất cả</option>
+                                        <option ng-repeat="sh in shape" value="{{ sh.id }}">{{ sh.name }}</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <p>Loại dây:</p>
+                                    <select name="category" ng-model="selectedLoaiday" ng-change="applyFilters()">
+                                        <option value="">Tất cả</option>
+                                        <option ng-repeat="str in strap" value="{{ str.id }}">{{ str.name }}</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div class="clear-filter" ng-click="clearFilters()">
+                                <h4>Xóa</h4>
+                                <i class='bx bx-x'></i>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="checkbox">
+                                        <input type="checkbox" id="selectAllCheckbox" ng-model="selectAllCheckbox"
+                                            ng-click="selectAllCheckboxes()">
+                                    </th>
+                                    <th></th>
+                                    <th>Tên</th>
+                                    <th>Thương hiệu</th>
+                                    <th>Màu vỏ</th>
+                                    <th>Chất liệu vỏ</th>
+                                    <th>Tính năng</th>
+                                    <th>Chất liệu kính</th>
+                                    <th>Hình dáng</th>
+                                    <th>Xuất xứ</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="watch in watchs">
+                                    <td> <input type="checkbox" ng-model="watch.selected"></td>
+                                    <td>
+                                        <img src="/image/images/{{watch.images[0].image_link}}">
+                                    </td>
+                                    <td>
+                                        <p>{{watch.product.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.brand.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.casecolor.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.casematerial.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.feature.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.glassmaterial.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.shape.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.origin.name}}</p>
+                                    </td>
+                                    <td ng-click="updateProduct(watch)">
+                                        <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="soluongton-product" ng-show="currentTab === 'soLuongTon'">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Danh sách</h3>
+                            <div class="tienich">
+                                <div style="position: relative;">
+                                    <input class="input-timkiem" type="text" placeholder="Điền tên sản phẩm cần tìm"
+                                        ng-model="searchMaHD" ng-keyup="searchOrders(searchMaHD)">
+                                    <i class='bx bx-search'
+                                        style="position: absolute; right: 5px;top: 5px; font-size: 20px;"></i>
+                                </div>
+                                <i class='bx bx-x' id="close-icon"></i>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="checkbox">
+                                        <input type="checkbox" id="selectAllCheckbox" ng-model="selectAllCheckbox"
+                                            ng-click="selectAllCheckboxes()">
+                                    </th>
+                                    <th></th>
+                                    <th>Tên</th>
+                                    <th>Thương hiệu</th>
+                                    <th>Màu vỏ</th>
+                                    <th>Chất liệu vỏ</th>
+                                    <th>Tính năng</th>
+                                    <th>Chất liệu kính</th>
+                                    <th>Hình dáng</th>
+                                    <th>Xuất xứ</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="watch in watchsHetHang">
+                                    <td> <input type="checkbox" ng-model="watch.selected"></td>
+                                    <td>
+                                        <img src="/image/images/{{watch.images[0].image_link}}">
+                                    </td>
+                                    <td>
+                                        <p>{{watch.product.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.brand.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.casecolor.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.casematerial.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.feature.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.glassmaterial.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.shape.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.origin.name}}</p>
+                                    </td>
+                                    <td ng-click="updateProduct(watch)">
+                                        <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="ngunghoatdong-product" ng-show="currentTab === 'ngungHoatDong'">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Danh sách</h3>
+                            <div class="tienich">
+                                <div class="search-product" id="search-container">
+                                    <p></p>
+                                    <input type="text" placeholder="Điền sản phẩm cần tìm">
+                                    <i class='bx bx-search' id="search-icon"></i>
+                                </div>
+                                <i class='bx bx-x' id="close-icon"></i>
+                                <div class="dropdown-tienich">
+                                    <button id="dropdown-toggle" class="btn-dropdown">
+                                        Tiện tích <i class='bx bx-chevrons-down'></i>
+                                    </button>
+                                    <ul id="dropdown-menu" class="dropdown-menu">
+                                        <li><a href="#"><i class='bx bx-stop-circle' style='color:black'></i>Khôi
+                                                phục</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Tên</th>
+                                    <th>Thương hiệu</th>
+                                    <th>Màu vỏ</th>
+                                    <th>Chất liệu vỏ</th>
+                                    <th>Tính năng</th>
+                                    <th>Chất liệu kính</th>
+                                    <th>Hình dáng</th>
+                                    <th>Xuất xứ</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="watch in watchs" ng-if="watch.status === 1">
+                                    <td>
+                                        <img src="/image/images/{{watch.images[0].image_link}}">
+                                    </td>
+                                    <td>
+                                        <p>{{watch.product.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.brand.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.casecolor.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.casematerial.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.feature.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.glassmaterial.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.shape.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{watch.origin.name}}</p>
+                                    </td>
+                                    <td>
+                                        <h4 style="color: #0188ff;" ng-click="updateProduct(watch)">Chỉnh sửa</h4>
+                                        <h4 style="margin-top: 5px; color: #0188ff;" ng-click="restoreProduct(watch)">
+                                            Khôi phục</h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PopupUpdate -->
+            <div class="popupUpdate" id="productPopup" ng-show="showupdateProduct">
+                <div class="popup-content">
+                    <span ng-click="closePopupUpdate()" class="close" id="closePopup">&times;</span>
+                    <h2>Cập nhập sản phẩm</h2>
+                    <form class="form-sanpham">
+                        <div class="form-left">
+                            <div class="image-product" style="position: relative;">
+                                <img style="image-rendering: pixelated;"
+                                    src="/image/images/{{selectedWatch.images[0].image_link}}" alt="">
+                                <input type="file" id="fileInputUpdate" style="display: none;">
+                                <div class="button">
+                                    <button style="position: absolute; left: -6px; bottom: -7px;"
+                                        ng-click="selectImageUpdate()">Thay đổi ảnh</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Tên sản phẩm</label>
+                                <input class="custom-input" type="text" disabled ng-model="selectedWatch.product.name">
+                                <input class="custom-input" type="text" placeholder="Điền tên"
+                                    ng-model="sanphamUpdate.tenSanPham">
+                            </div>
+                            <div>
+                                <label for="thuong-hieu">Thương hiệu</label>
+                                <input class="custom-input" type="text" disabled ng-model="selectedWatch.brand.name">
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.brnad"
+                                        ng-options="th as th.name for th in thuongHieu">
+                                        <option value="">Chọn thương hiệu</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('thuonghieu')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('thuonghieu')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Thương hiệu</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('thuonghieu')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input"
+                                                        placeholder="Điền tên thương hiệu" ng-model="nameThuongHieu">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorThuongHieu">Đã
+                                                    tồn tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiThuongHieu()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="size-mat">Size mặt</label>
+                                <select class="custom-input">
+                                    <option value="" ng-repeat="size in sizeMatselectedWatchFixed">{{size.size.name}}
+                                    </option>
+                                </select>
+                                <div>
+                                    <select class="custom-input" ng-model="sizeMatselectedWatch.size"
+                                        ng-options="size as size.name for size in sizeMat"
+                                        ng-change="updateSizeUpdate(sizeMatselectedWatch.size)">
+                                        <option value="">Chọn Size mặt</option>
+                                        </option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('sizemat')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('sizemat')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Size mặt</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('sizemat')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền kích cỡ"
+                                                        ng-model="nameSize">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorSize">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiSizemat()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Giới tính</label>
+                                <input class="custom-input" type="text" disabled ng-model="selectedWatch.gender.name">
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.gender"
+                                        ng-options="gt as gt.name for gt in gender">
+                                        <option value="">Chọn Giới tính</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('gioitinh')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('gioitinh')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Giới tính</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('gioitinh')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền giới tính"
+                                                        ng-model="nameGioiTinh">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorGender">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiGioiTinh()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Dòng máy</label>
+                                <input class="custom-input" type="text" disabled
+                                    ng-model="selectedWatch.machinetype.name">
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.machinetype"
+                                        ng-options="mt as mt.name for mt in machineType">
+                                        <option value="">Chọn Dòng máy</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('dongmay')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('dongmay')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Dòng máy</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('dongmay')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền dòng máy"
+                                                        ng-model="nameDongMay">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorDongmay">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiDongMay()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Chất liệu dây</label>
+                                <input class="custom-input" type="text" disabled ng-model="selectedWatch.strap.name">
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.strap"
+                                        ng-options="str as str.name for str in strap">
+                                        <option value="">Chọn Loại dây</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('chatlieuday')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('chatlieuday')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Chất liệu dây</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('chatlieuday')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input"
+                                                        placeholder="Điền Chất liệu dây" ng-model="nameChatLieuDay">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorChatlieuday">Đã
+                                                    tồn tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiChatlieuday()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Chất liệu kính</label>
+                                <input class="custom-input" type="text" disabled
+                                    ng-model="selectedWatch.glassmaterial.name">
+
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.glassmaterial"
+                                        ng-options="gm as gm.name for gm in glassMaterial">
+                                        <option value="">Chọn Loại kính</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('chatlieukinh')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('chatlieukinh')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Chất liệu kính</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('chatlieukinh')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input"
+                                                        placeholder="Điền chất liệu kính" ng-model="nameChatLieuKinh">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorChatlieukinh">Đã
+                                                    tồn tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiChatlieukinh()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Tính năng</label>
+                                <input class="custom-input" type="text" disabled ng-model="selectedWatch.feature.name">
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.feature"
+                                        ng-options="tn as tn.name for tn in feature">
+                                        <option value="">Chọn Tính năng</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('tinhnang')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('tinhnang')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Tính năng</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('tinhnang')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền Tính năng"
+                                                        ng-model="nameTinhNang">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorTinhnang">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiTinhnang()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Xuất xứ</label>
+                                <input class="custom-input" type="text" disabled ng-model="selectedWatch.origin.name">
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.origin"
+                                        ng-options="or as or.name for or in origin">
+                                        <option value="">Chọn xuất xứ</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('xuatxu')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('xuatxu')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Xuất xứ</h3>
+                                            <span class="close-thuoctinh" ng-click="closePopup('xuatxu')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền Xuất xứ"
+                                                        ng-model="nameXuatXu">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorXuatxu">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiXuatxu()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Hình dạng</label>
+                                <input class="custom-input" type="text" disabled ng-model="selectedWatch.shape.name">
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.shape"
+                                        ng-options="sh as sh.name for sh in shape">
+                                        <option value="">Chọn hình dạng</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('hinhdang')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('hinhdang')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Hình dạng</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('hinhdang')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền hình dạng"
+                                                        ng-model="nameHinhDang">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorHinhdang">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiHinhdang()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="">Màu vỏ</label>
+                                <input class="custom-input" type="text" disabled
+                                    ng-model="selectedWatch.casecolor.name">
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.casecolor"
+                                        ng-options="cc as cc.name for cc in caseColor">
+                                        <option value="">Chọn màu vỏ</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('mauvo')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('mauvo')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Màu vỏ</h3>
+                                            <span class="close-thuoctinh" ng-click="closePopup('mauvo')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input" placeholder="Điền màu vỏ"
+                                                        ng-model="nameMauVo">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorMauvo">Đã tồn
+                                                    tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiMauvo()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="">Chất liệu vỏ</label>
+                                <input class="custom-input" type="text" disabled
+                                    ng-model="selectedWatch.casematerial.name">
+                                <div>
+                                    <select class="custom-input" ng-model="sanphamUpdate.casematerial"
+                                        ng-options="cm as cm.name for cm in caseMaterial">
+                                        <option value="">Chọn màu vỏ</option>
+                                    </select>
+                                    <i class='bx bxs-edit-alt' style="font-size: 17px;"
+                                        ng-click="openPopup('chatlieuvo')"></i>
+                                    <div class="popup-thuoctinh" ng-show="isPopupOpen('chatlieuvo')">
+                                        <div class="popup-content-thuoctinh">
+                                            <h3>Thêm Chất liệu vỏ</h3>
+                                            <span class="close-thuoctinh"
+                                                ng-click="closePopup('chatlieuvo')">&times;</span>
+                                            <div class="form-thuoctinh">
+                                                <div>
+                                                    <h4>Tên</h4>
+                                                    <input type="text" class="custom-input"
+                                                        placeholder="Điền chất liệu vỏ" ng-model="nameChatLieuVo">
+                                                </div>
+                                                <span style="color: red;font-size: 13px;" ng-show="errorChatlieuvo">Đã
+                                                    tồn tại</span>
+                                                <div class="button">
+                                                    <button ng-click="themMoiChatlieuvo()">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-right">
+                            <div class="form-right-thuoctinh">
+                                <div class="form-right-thuoctinh-header" id="thuoctinh-header">
+                                    <h3>Thuộc tính</h3>
+                                    <i ng-click="toggleContent()" class="bx bxs-chevron-down" ng-show="showContent"
+                                        style="color: black"></i>
+                                    <i ng-click="toggleContent()" class="bx bxs-chevron-up" ng-hide="showContent"
+                                        style="color: black"></i>
+                                </div>
+                                <div class="form-right-thuoctinh-noidung" ng-show="showContent">
+                                    <ul>
+                                        <li>
+                                            <h3>Size mặt: </h3>
+                                            <div class="selected-values">
+                                                <span ng-repeat="selectedSizeMat in sizeMatselectedWatch"
+                                                    class="selected-value"
+                                                    ng-click="deleteSizeUpdate(selectedSizeMat)">{{
+                                                    selectedSizeMat.size.name }}</span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-right-image">
+                                <div class="form-right-image-header" id="image-header">
+                                    <h3>Danh sách sản phẩm cùng loại</h3>
+                                    <i ng-click="toggleImageContent()" class="bx bxs-chevron-down"
+                                        ng-show="showImageContent" style="color: black"></i>
+                                    <i ng-click="toggleImageContent()" class="bx bxs-chevron-up"
+                                        ng-hide="showImageContent" style="color: black"></i>
+                                </div>
+                                <div class="form-right-image-noidung" ng-show="showImageContent">
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <input class="custom-input" type="text" placeholder="Mã sản phẩm"
+                                            ng-model="hlmaUP">
+                                        <input class="custom-input" type="text" placeholder="Giá bán"
+                                            ng-model="hlbanUP">
+                                        <input class="custom-input" type="text" placeholder="Giá nhập"
+                                            ng-model="hlnhapUP">
+                                        <input class="custom-input" type="text" placeholder="Số lượng"
+                                            ng-model="hlslUP">
+                                        <div class="button">
+                                            <button ng-click="updateHangLoatUpdate()"
+                                                style="width: 200px; margin-top: -10px;">Cập nhập hàng loạt</button>
+                                        </div>
+                                    </div>
+                                    <div class="bottom-data">
+                                        <div class="orders">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Kích thước</th>
+                                                        <th style="padding-left: 15px;">Mã sản phẩm</th>
+                                                        <th>Giá bán</th>
+                                                        <th>Giá nhập</th>
+                                                        <th>Số lượng tồn</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="productUpdate in sizeMatselectedWatch"
+                                                        class="generationList">
+                                                        <td ng-model="productUpdate.size">{{productUpdate.size.name}}
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="productUpdate.code" class="custom-input"
+                                                                type="text" placeholder="Điền mã sản phẩm"
+                                                                ng-change="checkCodeUpdate(productUpdate)">
+                                                            <span style="color: red; font-size: 13px;"
+                                                                ng-show="productUpdate.checkCodeUPError">Mã đã tồn tại</span>
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="productUpdate.price" class="custom-input"
+                                                                type="text" placeholder="Điền giá bán"
+                                                                ng-change="checkGiaBanUpdate(productUpdate)">
+                                                            <span style="color: red; font-size: 13px;"
+                                                                ng-show="productUpdate.checkGiaBanUPError">Giá bán không hợp
+                                                                lệ</span>
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="productUpdate.price_im"
+                                                                class="custom-input" type="text"
+                                                                placeholder="Điền giá nhập"
+                                                                ng-change="checkGiaNhapUpdate(productUpdate)">
+                                                            <span style="color: red; font-size: 13px;"
+                                                                ng-show="productUpdate.checkGiaNhapUPError">Giá nhập không hợp
+                                                                lệ</span>
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="productUpdate.quantity_stock"
+                                                                class="custom-input" type="text"
+                                                                placeholder="Điền số lượng tồn"
+                                                                ng-change="checkSoUpdate(productUpdate)">
+                                                            <span style="color: red; font-size: 13px;"
+                                                                ng-show="productUpdate.checkSoUPError">Số lượng không hợp
+                                                                lệ</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="button">
+                        <button ng-click="capNhapProducts()">Update</button>
+                        <button>Làm mới</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- <div class="popupImage" ng-show="showImagePopup">
+            <div class="popup-image">
+              <h3>Chọn ảnh cho sản phẩm {{ currentProduct.size.name }}</h3>
+              <input type="file" ng-model="imageFile" accept="image/*" onchange="angular.element(this).scope().previewImage(this)" />
+              <img ng-src="{{imagePreview}}" alt="Preview" ng-show="imagePreview" />
+              <div class="button">
+                <button ng-click="uploadImage()">Tải lên</button>
+                <button ng-click="closeImagePopup()">Đóng</button>
+              </div>
+            </div>
+          </div> -->
+
+        <!-- <div ng-show="showImagePopup" class="popupImage">
+            <div class="popup-image">
+                <h3>Chọn ảnh cho sản phẩm {{ currentProduct.thuongHieu.name }}</h3>
+                <span class="close-thuoctinh" id="closePopup-image" ng-click="closeImagePopup()">&times;</span>
+                <div class="image-sanpham">
+                    <img ng-src="{{selectedProductImage}}">
+                </div>
+                <div class="button">
+                    <label for="image-upload" id="add-image-button">Thêm ảnh</label>
+                    <button id="delete-image-button" ng-click="deleteImage()">Xóa ảnh</button>
+                    <input type="file" id="image-upload" accept="image/*" style="display: none">
+                </div>
+            </div>
+        </div> -->
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thương hiệu</title>
+    <link rel="stylesheet" href="thongke.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Thống kê</h1>
+                </div>
+                <!-- <a href="#" class="report" id="openPopup">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span>Thêm thương hiệu</span>
+                </a> -->
+            </div>
+            <!-- Popup -->
+            <!-- <div class="popup" id="popup">
+                <div class="popup-content">
+                    <span class="close" id="closePopup">&times;</span>
+                    <h2>Thêm thương hiệu</h2>
+                    <form class="form-popup">
+                        <div>
+                            <h4>Tên</h4>
+                            <input type="text" class="custom-input" placeholder="Điền tên thương hiệu">
+                        </div>
+                        <div class="button">
+                            <button>Thêm mới</button>
+                        </div>
+                    </form>
+                </div>
+            </div> -->
+            <!-- End popup -->
+
+            <!-- <div class="tab-product">
+                <ul>
+                    <li onclick="showDanhSachThuocTinh()" class="active">Danh sách thương hiệu</li>
+                    <li onclick="showThuocTinhTrong()">Thương hiệu trống</li>
+                </ul>
+            </div> -->
+            <div style="border-radius: 8px; background-color: white; padding: 1rem;">
+                <div class="thongke1"
+                    style="display: flex; text-align: center; justify-content: center; align-items: center;">
+                    <div style="margin-left: -25px;">
+                        <p style="color: #0188ff;">{{choXacNhan}}</p>
+                        <p>Chờ xác nhận</p>
+                    </div>
+                    <div>
+                        <p style="color: #0188ff;">{{choLayHang}}</p>
+                        <p>Chờ lấy hàng</p>
+                    </div>
+                    <div>
+                        <p style="color: #0188ff;">{{choXuLy}}</p>
+                        <p>Chờ xử lý hoàn</p>
+                    </div>
+                </div>
+                <div class="thongke1"
+                    style="display: flex; text-align: center; justify-content: center; align-items: center;">
+                    <div>
+                        <p style="color: #0188ff;">{{hdall}}</p>
+                        <p>Hóa đơn hôm nay</p>
+                    </div>
+                    <div>
+                        <p style="color: #0188ff;">{{sanPham}}</p>
+                        <p>Sản phẩm hết hàng</p>
+                    </div>
+                    <div>
+                        <p style="color: #0188ff;">{{kmai}}</p>
+                        <p>Khuyến mãi đang diễn ra</p>
+                    </div>
+                </div>
+            </div>
+            <div style="border-radius: 8px; background-color: white; padding: 1rem; margin-top: 35px;">
+                <div>
+                    <div style="align-items: center; display: flex;">
+                        <p style="margin-right: 15px;">Thời gian</p>
+                        <div>
+                            <input ng-model="startTime" type="date" class="custom-input" style="width: 200px;"
+                                >
+                        </div>
+                        <p style="margin: 0 5px;">-</p>
+                        <div>
+                            <input ng-model="endTime" type="date" class="custom-input" style="width: 200px;"
+                                >
+                        </div>
+                        <div class="button">
+                            <button  style="margin-top: -8px;" ng-click="loc()">Lọc</button>
+                        </div>
+                    </div>
+                    <p style="color: red; font-size: 14px;" ng-show="errorTime">Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc</p>
+                    <p style="color: red; font-size: 14px;" ng-show="empTyTime">Thời gian không được để trống</p>
+                </div>
+                <div style="text-align: center; margin-top: 25px;">
+                    <h3>Tổng tiền: {{totol}} VND</h3>
+                </div>
+                <div class="thongke1"
+                    style="display: flex; margin-top: 15px; text-align: center; justify-content: space-around; align-items: center; ">
+                    <div>
+                        <p style="color: #0188ff;">{{hdThanhCong}}</p>
+                        <p>Hóa đơn thành công</p>
+                    </div>
+                    <div>
+                        <p style="color: #0188ff;">{{hdHuy}}</p>
+                        <p>Hóa đơn hủy</p>
+                    </div>
+                    <div>
+                        <p style="color: #0188ff;">{{hdHoan}}</p>
+                        <p>Hóa đơn hoàn</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

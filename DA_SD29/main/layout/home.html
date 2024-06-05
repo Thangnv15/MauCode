@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/main/css/home.css">
+    <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<body>
+    <div class="products">
+        <div class="slider">
+            <div class="list">
+                <div class="item">
+                    <div>
+                        <h2>Đồng hồ cổ điển tuyệt vời</h3>
+                            <p class="lg_titile">
+                                Thời gian, không gì có thể đo lường nó tốt hơn so với một chiếc đồng hồ đẹp. Đồng hồ
+                                không
+                                chỉ là một thiết bị đo thời gian, mà còn là biểu tượng của phong cách và cái nhìn về
+                                cuộc
+                                sống. Chúng ta không chỉ đeo nó để biết giờ, mà còn để tỏ ra lịch lãm và đẳng cấp.
+                            </p>
+                            <button class="custom-btn btn-3"><span ng-click="chuyenTrang()">Đọc thêm</span></button>
+                    </div>
+                    <img src="/image/images/8.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img src="/image/images/9.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img src="/image/images/6.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img src="/image/images/11.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img src="/image/images/12.jpg" alt="">
+                </div>
+            </div>
+            <div class="buttons">
+                <button id="prev">&lt;</button>
+                <button id="next">&gt;</button>
+            </div>
+            <ul class="dots">
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="container">
+            <h1 class="lg-title">Đồng hồ đặc biệt với nhiều ưu đãi</h1>
+            <p class="text-light">
+                "Thời gian không chỉ là những con số di động trên mặt đồng hồ, mà còn là câu chuyện của những khoảnh
+                khắc quý giá. Đồng hồ không chỉ là một công cụ đo giờ, mà là biểu tượng của phong cách và đẳng cấp. Hãy
+                đắm chìm trong thế giới của thời gian và đẹp tinh tế với những mẫu đồng hồ độc đáo, làm nổi bật cá tính
+                và thể hiện phong cách riêng của bạn. Chọn lựa thông minh, sống chậm lại và để đồng hồ làm người bạn
+                đồng hành trung thành, ghi lại những khoảnh khắc đáng nhớ trong cuộc sống."
+            </p>
+
+            <div class="title-new-product">
+                <h3>Sản phẩm mới</h3>
+                <p style="text-decoration: underline; color: #0188ff; cursor: pointer;">Xem tất cả sản phẩm mới</p>
+            </div>
+            <div class="product-items">
+                <!-- single product -->
+                <div class="product" ng-repeat="watch in displayedProducts">
+                    <div class="product-content">
+                        <div class="product-img" ng-click="detailProduct(watch)">
+                            <a>
+                                <img ng-src="/image/images/{{watch.images[0].image_link}}" alt="product image">
+                            </a>
+                        </div>
+                        <div class="product-btns">
+                            <button type="button" class="btn-cart" ng-click="addtoCart(watch)"> thêm vào giỏ
+                                <span><i class="fas fa-plus"></i></span>
+                            </button>
+                            <button type="button" class="btn-buy" ng-click="buyNow(watch)"> mua ngay
+                                <span><i class="fas fa-shopping-cart"></i></span>
+                            </button>
+                            <!-- <button type="button" class="btn-love"> add to love
+                                <span>
+                                    <i class='bx bxs-heart'></i>
+                                </span>
+                            </button> -->
+                        </div>
+                    </div>
+
+                    <div class="product-info" style="height: 220px;">
+                        <div class="product-info-top">
+                            <div class="rating">
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span ng-show="star"><i class="far fa-star"></i></span>
+                            </div>
+                            <h2 class="sm-title">{{watch.brand.name}}</h2>
+                        </div>
+                        <a href="#" class="product-name" title="{{watch.product.name}}">{{watch.product.name}}</a>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.price}} VND</p>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.giamoi}} VND</p>
+                        <p ng-show="!watch.giamoi" style="margin: 1rem 0;">{{watch.price}} VND</p>
+                        <!-- <p style="font-size: 14px; margin-top: 10px;">Sô lượng còn: {{watch.quantity_stock}}</p> -->
+                    </div>
+
+                    <div class="off-info" ng-show="watch.giamgia">
+                        <h2 class="sm-title">-{{watch.giamgia}}%</h2>
+                    </div>
+                </div>
+                <!-- end of single product -->
+                <button class="btn-next-sp" ng-click="previousPage()">
+                    &lt;</button>
+                <button class="btn-previous-sp" ng-click="nextPage()">&gt;</button>
+            </div>
+            <!-- Ad chinh sach -->
+            <div class="title-ad-chinhsach">
+                <img style="width: 48px; height: 48px; image-rendering: pixelated" src="/admin/images/bee (1).png">
+                <p>|</p>
+                <h4>Chính sách đổi trả hợp lí
+                    <a href="#term" style="font-size: 13px;">Tìm hiểu thêm</a>
+                </h4>
+            </div>
+            <!-- <div class="category-list">
+                <ul>
+                    <li class="active">Nổi bật</li>
+                    <li>Bán chạy</li>
+                    <li>Giảm giá</li>
+                    <li>Tồn kho</li>
+                </ul>
+            </div> -->
+            <!-- Display product theo category -->
+            <div class="product-items-category">
+                <div class="product active">
+                    <h1>Zenith</h1>
+                    <a href="" ng-click="searchCates('Zenith')">Xem tất cả sản phẩm</a>
+                    <img src="/image/zenith-wallpaper.jpg" alt="product image">
+                </div>
+                <!-- single product -->
+                <div class="product" ng-repeat="watch in productCasts | filter:filterZenithProducts | limitTo: 4">
+                    <div class="product-content">
+                        <div class="product-img" ng-click="detailProduct(watch)">
+                            <a>
+                                <img ng-src="/image/images/{{watch.images[0].image_link}}" alt="product image">
+                            </a>
+                        </div>
+                        <div class="product-btns">
+                            <button type="button" class="btn-cart" ng-click="addtoCart(watch)"> thêm vào giỏ
+                                <span><i class="fas fa-plus"></i></span>
+                            </button>
+                            <button type="button" class="btn-buy" ng-click="buyNow(watch)"> mua ngay
+                                <span><i class="fas fa-shopping-cart"></i></span>
+                            </button>
+                            <!-- <button type="button" class="btn-love"> add to love
+                                <span>
+                                    <i class='bx bxs-heart'></i>
+                                </span>
+                            </button> -->
+                        </div>
+                    </div>
+
+                    <div class="product-info" style="height: 220px;">
+                        <div class="product-info-top">
+                            <div class="rating">
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span ng-show="star"><i class="far fa-star"></i></span>
+                            </div>
+                            <h2 class="sm-title">{{watch.brand.name}}</h2>
+                        </div>
+                        <a href="#" class="product-name" title="{{watch.product.name}}">{{watch.product.name}}</a>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.price}} VND</p>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.giamoi}} VND</p>
+                        <p ng-show="!watch.giamoi" style="margin: 1rem 0;">{{watch.price}} VND</p>
+                    </div>
+
+                    <div class="off-info" ng-show="watch.giamgia">
+                        <h2 class="sm-title">-{{watch.giamgia}}%</h2>
+                    </div>
+                </div>
+                <!-- end of single product -->
+            </div>
+
+
+            <!-- <div class="category-list">
+                <ul>
+                    <li class="active">Nổi bật</li>
+                    <li>Bán chạy</li>
+                    <li>Giảm giá</li>
+                    <li>Tồn kho</li>
+                </ul>
+            </div> -->
+            <!-- end category list -->
+            <div class="product-items-category">
+                <div class="product active">
+                    <h1>Hublot</h1>
+                    <a href="" ng-click="searchCates('Hublot')">Xem tất cả sản phẩm</a>
+                    <img src="/image/hublot-wallpaper.png" alt="product image">
+                </div>
+                <!-- single product -->
+                <div class="product" ng-repeat="watch in productCasts | filter:filterHublotProducts | limitTo: 4">
+                    <div class="product-content">
+                        <div class="product-img" ng-click="detailProduct(watch)">
+                            <a>
+                                <img ng-src="/image/images/{{watch.images[0].image_link}}" alt="product image">
+                            </a>
+                        </div>
+                        <div class="product-btns">
+                            <button type="button" class="btn-cart" ng-click="addtoCart(watch)"> thêm vào giở
+                                <span><i class="fas fa-plus"></i></span>
+                            </button>
+                            <button type="button" class="btn-buy" ng-click="buyNow(watch)"> mua ngay
+                                <span><i class="fas fa-shopping-cart"></i></span>
+                            </button>
+                            <!-- <button type="button" class="btn-love"> add to love
+                                <span>
+                                    <i class='bx bxs-heart'></i>
+                                </span>
+                            </button> -->
+                        </div>
+                    </div>
+
+                    <div class="product-info" style="height: 220px;">
+                        <div class="product-info-top">
+                            <div class="rating">
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span ng-show="star"><i class="far fa-star"></i></span>
+                            </div>
+                            <h2 class="sm-title">{{watch.brand.name}}</h2>
+                        </div>
+                        <a href="#" class="product-name" title="{{watch.product.name}}">{{watch.product.name}}</a>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.price}} VND</p>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.giamoi}} VND</p>
+                        <p ng-show="!watch.giamoi" style="margin: 1rem 0;">{{watch.price}} VND</p>
+                    </div>
+
+                    <div class="off-info" ng-show="watch.giamgia">
+                        <h2 class="sm-title">-{{watch.giamgia}}%</h2>
+                    </div>
+                </div>
+                <!-- end of single product -->
+
+
+            </div>
+            <!-- <div class="category-list">
+                <ul>
+                    <li class="active">Nổi bật</li>
+                    <li>Bán chạy</li>
+                    <li>Giảm giá</li>
+                    <li>Tồn kho</li>
+                </ul>
+            </div> -->
+            <!-- end category list -->
+            <div class="product-items-category">
+                <div class="product active">
+                    <h1>Omega</h1>
+                    <a href="" ng-click="searchCates('Omega')">Xem tất cả sản phẩm</a>
+                    <img src="/image/omega-wallpaper.jpg" alt="product image">
+                </div>
+                <!-- single product -->
+                <div class="product" ng-repeat="watch in productCasts | filter:filterOmegaProducts | limitTo: 4">
+                    <div class="product-content">
+                        <div class="product-img" ng-click="detailProduct(watch)">
+                            <a>
+                                <img ng-src="/image/images/{{watch.images[0].image_link}}" alt="product image">
+                            </a>
+                        </div>
+                        <div class="product-btns">
+                            <button type="button" class="btn-cart" ng-click="addtoCart(watch)"> thêm vào giỏ
+                                <span><i class="fas fa-plus"></i></span>
+                            </button>
+                            <button type="button" class="btn-buy" ng-click="buyNow(watch)"> mua ngay
+                                <span><i class="fas fa-shopping-cart"></i></span>
+                            </button>
+                            <!-- <button type="button" class="btn-love"> add to love
+                                <span>
+                                    <i class='bx bxs-heart'></i>
+                                </span>
+                            </button> -->
+                        </div>
+                    </div>
+
+                    <div class="product-info" style="height: 220px;">
+                        <div class="product-info-top">
+                            <div class="rating">
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span ng-show="star"><i class="far fa-star"></i></span>
+                            </div>
+                            <h2 class="sm-title">{{watch.brand.name}}</h2>
+                        </div>
+                        <a href="#" class="product-name" title="{{watch.product.name}}">{{watch.product.name}}</a>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.price}} VND</p>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.giamoi}} VND</p>
+                        <p ng-show="!watch.giamoi" style="margin: 1rem 0;">{{watch.price}} VND</p>
+                    </div>
+
+                    <div class="off-info" ng-show="watch.giamgia">
+                        <h2 class="sm-title">-{{watch.giamgia}}%</h2>
+                    </div>
+                </div>
+                <!-- end of single product -->
+
+            </div>
+            <!-- <div class="category-list">
+                <ul>
+                    <li class="active">Nổi bật</li>
+                    <li>Bán chạy</li>
+                    <li>Giảm giá</li>
+                    <li>Tồn kho</li>
+                </ul>
+            </div> -->
+            <!-- end category list -->
+            <div class="product-items-category">
+                <div class="product active">
+                    <h1>Rolex</h1>
+                    <a href="" ng-click="searchCates('Rolex')">Xem tất cả sản phẩm</a>
+                    <img src="/image/rolex-wallpaper.png" alt="product image">
+                </div>
+                <!-- single product -->
+                <div class="product" ng-repeat="watch in productCasts | filter:filterRolexProducts | limitTo: 4">
+                    <div class="product-content">
+                        <div class="product-img" ng-click="detailProduct(watch)">
+                            <a>
+                                <img ng-src="/image/images/{{watch.images[0].image_link}}" alt="product image">
+                            </a>
+                        </div>
+                        <div class="product-btns">
+                            <button type="button" class="btn-cart" ng-click="addtoCart(watch)"> thêm vào giỏ
+                                <span><i class="fas fa-plus"></i></span>
+                            </button>
+                            <button type="button" class="btn-buy" ng-click="buyNow(watch)"> mua ngay
+                                <span><i class="fas fa-shopping-cart"></i></span>
+                            </button>
+                            <!-- <button type="button" class="btn-love"> add to love
+                                <span>
+                                    <i class='bx bxs-heart'></i>
+                                </span>
+                            </button> -->
+                        </div>
+                    </div>
+
+                    <div class="product-info" style="height: 220px;">
+                        <div class="product-info-top">
+                            <div class="rating">
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span ng-show="star"><i class="far fa-star"></i></span>
+                            </div>
+                            <h2 class="sm-title">{{watch.brand.name}}</h2>
+                        </div>
+                        <a href="#" class="product-name" title="{{watch.product.name}}">{{watch.product.name}}</a>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.price}} VND</p>
+                        <p class="product-price" ng-show="watch.giamoi">{{watch.giamoi}} VND</p>
+                        <p ng-show="!watch.giamoi" style="margin: 1rem 0;">{{watch.price}} VND</p>
+                    </div>
+
+                    <div class="off-info" ng-show="watch.giamgia">
+                        <h2 class="sm-title">-{{watch.giamgia}}%</h2>
+                    </div>
+                </div>
+                <!-- end of single product -->
+
+
+            </div>
+            <!-- start ad logo -->
+            <div class="ad-logo">
+                <ul>
+                    <li><img src="/image/images/logo-rolex.png" alt=""></li>
+                    <li><img src="/image/images/logo-hublot.png" alt=""></li>
+                    <li><img src="/image/images/logo-citizen.png" alt=""></li>
+                    <li><img src="/image/images/logo-zenith.png" alt=""></li>
+                    <li><img src="/image/images/logo-tudor.png" alt=""></li>
+                    <li><img src="/image/images/logo-omega.png" alt=""></li>
+                </ul>
+            </div>
+            <!-- end ad logo -->
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="product-collection">
+        <div class="container">
+            <div class="product-collection-wrapper">
+                <!-- product col left -->
+                <div class="product-col-left flex">
+                    <div class="product-col-content">
+                        <h2 class="sm-title">đồng hồ nam </h2>
+                        <h2 class="md-title">bộ sưu tập nam </h2>
+                        <p class="text-light">
+                            Khám phá thế giới của sự lịch lãm và tinh tế với bộ sưu tập đồng hồ nam của chúng tôi. Từ
+                            thiết kế hiện đại đến đồng hồ cổ điển, mỗi chiếc đồng hồ là một biểu tượng phong cách và sự
+                            sang trọng. Đánh thức đẳng cấp và thể hiện cá tính của bạn cùng những sản phẩm chất lượng
+                            hàng đầu, đồng hành đáng tin cậy trên mọi hành trình.
+                        </p>
+                        <button type="button" class="btn-dark">Khám phá</button>
+                    </div>
+                </div>
+
+                <!-- product col right -->
+                <div class="product-col-right">
+                    <div class="product-col-r-top flex">
+                        <div class="product-col-content">
+                            <h2 class="sm-title">đồng hồ nữ </h2>
+                            <h2 class="md-title">bộ sưu tập nữ </h2>
+                            <p class="text-light">
+                                Khám phá đẳng cấp và sự quyến rũ, bộ sưu tập đồng hồ nữ của chúng tôi là sự kết hợp hoàn
+                                hảo giữa thiết kế tinh tế và phong cách cá tính. Đặt chúng trên tay để tỏa sáng, bởi vì
+                                bạn xứng đáng nổi bật mỗi ngày.
+                            </p>
+                            <button type="button" class="btn-dark">Khám phá</button>
+                        </div>
+                    </div>
+
+                    <div class="product-col-r-bottom">
+                        <!-- left -->
+                        <div class="flex">
+                            <div class="product-col-content">
+                                <h2 class="sm-title">winter sale </h2>
+                                <h2 class="md-title">Giảm lên đến 30%</h2>
+                                <p class="text-light">
+                                    Chinh phục mùa đông với chiến dịch Winter Sale! Đồng hồ nổi bật, ưu đãi đặc biệt.
+                                    Những chiếc đồng hồ không chỉ là phụ kiện mà còn là điểm nhấn thời trang, làm ấm
+                                    lòng bạn trong những ngày lạnh giá. Hãy đắm chìm trong phong cách và tiết kiệm, chỉ
+                                    có tại BeeWatch.
+                                </p>
+                                <button type="button" class="btn-dark">Khám phá</button>
+                            </div>
+                        </div>
+                        <!-- right -->
+                        <div class="flex">
+                            <div class="product-col-content">
+                                <h2 class="sm-title">watchs </h2>
+                                <h2 class="md-title">best sellers </h2>
+                                <p class="text-light">Khám phá danh sách Best Sellers - những chiếc đồng hồ được lòng
+                                    khách hàng và đánh giá cao nhất! Từ thiết kế độc đáo đến độ chính xác trong từng
+                                    đường nét, chúng tôi tự hào giới thiệu những sản phẩm nổi bật, đánh bại mọi dự đoán
+                                    và trở thành biểu tượng thời gian.</p>
+                                <button type="button" class="btn-dark">Khám phá</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- start block-quote -->
+        <div class="block-quote">
+            <div class="content">
+                <h1>"</h1>
+                <p>"Thời gian là cuộc sống, và chúng tôi tôn trọng từng khoảnh khắc. Đồng hồ của chúng tôi không chỉ đo
+                    giờ, mà còn là những chiếc đồ trang trí tinh tế, là biểu tượng của phong cách và cái đẹp.
+                    Chúng tôi không chỉ bán đồng hồ, chúng tôi cung cấp những chuyến phiêu lưu thời gian. Mỗi chiếc đồng
+                    hồ tại cửa hàng là một câu chuyện, một dấu ấn cá nhân trong từng khoảnh khắc của bạn."</p>
+                <span>--Châm ngôn sống</span>
+                <button>Liên hệ với chúng tôi</button>
+            </div>
+        </div>
+        <!-- end block-quote -->
+    </div>
+    <div class="overlay" ng-show="showFormAddCart">
+        <div class="formAddCart">
+            <button class="closeButton" ng-click="closePopup()">×</button>
+            <div class="image_thongso">
+                <img ng-src="/image/images/{{Productcart.images[0].image_link}}" alt="product image">
+                <div>
+                    <p ng-show="!Productcart.giamoi" class="image_thongso_gia">{{Productcart.price}} <u style="font-size: 18px;">VND</u></p>
+                    <p ng-show="Productcart.giamoi" class="image_thongso_gia">{{Productcart.giamoi}} <u style="font-size: 18px;">VND</u></p>
+                    <div style="display: flex" ng-show="Productcart.giamoi">
+                        <p style="text-decoration: line-through; color: gray;">{{Productcart.price}} VND</p>
+                        <p style="margin-left: 5px; color: #0188ff; border-radius: 8px; background-color: #bce0ff; outline: none; width: 40px; height: 30px;">-{{Productcart.giamgia}}%</p>
+                    </div>
+                    <!-- giá giảm ở đây - giảm % luôn ở đây -->
+                    <p class="image_thongso_ten">
+                        {{Productcart.product.name}},&nbsp;&nbsp;{{Productcart.casecolor.name}},&nbsp;&nbsp;{{sizeShow}}
+                    </p>
+                    <!-- <p>{{Productcart.product.name, Productcart.casecolor.name, Productcart.size.name}}</p> -->
+                </div>
+            </div>
+            <div style="margin-top: 25px;">
+                <p>Kích cỡ</p>
+                <ul style="list-style: none; display: flex; flex-wrap: wrap;">
+                    <li ng-repeat="product in filteredProducts" ng-click="selectProductDetail(product)"
+                        ng-class="{ 'selectedProductDetailCart': product.isSelected }">
+                        <p>{{product.size.name}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div
+                style="margin-top: 25px; display: flex; justify-content: space-between; align-items: center; text-align: center;">
+                <p>Số lượng </p>
+                <div>
+                    <button class="prev" style="background-color: white;" ng-click="decrementQuantity()">&lt;</button>
+                    <input ng-model="quantityCart" class="middle" type="number" ng-change="updateQuantity()">
+                    <button class="next" style="background-color: white;" ng-click="incrementQuantity()">&gt;</button>
+                </div>
+            </div>
+            <div style="margin-top: 10px; display: flex; justify-content: space-between;align-items: center; ">
+                <p>Có thể bán {{Productcart.quantity_stock}}</p>
+                <button class="addtoCart" ng-click="themvaogio()" ng-class="{ 'disabled': showSoLuongLoi }">Thêm vào giỏ
+                    hàng</button>
+            </div>
+            <div class="error" ng-show="showSoLuongLoi">
+                Số lượng mua không phù hợp
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

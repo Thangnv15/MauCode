@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail</title>
+    <link rel="stylesheet" href="/main/css/detail.css">
+    <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<body>
+    <div class="detail">
+        <div class="detail-1">
+            <div class="product-list">
+                <ul>
+                    <li class="active" data-tab="about-product">Sản phẩm</li>
+                    <li data-tab="detail">Chi tiết</li>
+                    <li data-tab="blog">Mô tả</li>
+                </ul>
+            </div>
+            <div>
+                <!-- <div class="button">
+                    <input type="number">
+                    <button class="button-on" ng-click="addtoCart()">Thêm vào giỏ hàng
+                    </button>
+                    <button class="button-off" ng-click="buyNow()">Mua hàng ngay</button>
+                </div> -->
+            </div>
+        </div>
+        <div class="detail-2">
+            <div class="content-left" >
+                <h3 class="product-name">{{localStorageProduct.product.name}}-{{localStorageProduct.size.name}}</h3>
+                <p class="product-category">{{localStorageProduct.gender.name}}</p>
+                <div class="price">
+                    <p class="price-desc" ng-show="localStorageProduct.giamoi">{{localStorageProduct.price}} VND</p>
+                    <p class="price-stable" style="color: black;" ng-show="localStorageProduct.giamoi">{{localStorageProduct.giamoi}} VND</p>
+                    <p class="price-stable" style="color: black;" ng-show="!localStorageProduct.giamoi">{{localStorageProduct.price}} VND</p>
+                </div>
+                <div class="tab-content" id="about-product-content" style="position: relative;">
+                    <div class="product-about">
+                        <div class="product-color">
+                            <!-- <h4 class="mg-title">Chọn phong cách</h4> -->
+                            <!-- <ul> -->
+                            <!-- <li> -->
+                            <!-- <img src="/image/images/{{watch.images[0].image_link}}.png"> -->
+                            <!-- <img src="/image/images/{{localStorageProduct.images[0].image_link}}.png" alt=""> -->
+                            <!-- </li> -->
+                            <!-- <li><img src="/image/giay2.webp" alt=""></li>
+                                <li><img src="/image/giay3.webp" alt=""></li>
+                                <li><img src="/image/giay4.webp" alt=""></li>
+                                <li><img src="/image/giay3.webp" alt=""></li>
+                                <li><img src="/image/giay1.webp" alt=""></li>
+                                <li><img src="/image/giay4.webp" alt=""></li>
+                                <li><img src="/image/giay2.webp" alt=""></li>
+                                <li><img src="/image/giay3.webp" alt=""></li> -->
+                            <!-- </ul> -->
+                        </div>
+                        <div class="product-size">
+                            <h4 class="mg-title">Chọn size</h4>
+                            <ul>
+                                <li ng-repeat="product in filteredProducts">
+                                    <p ng-click="detailProduct(product)">{{product.size.name}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="position: absolute;">
+                            <div class="quantity-container">
+                                <p style="margin-right: 15px;">Số lượng</p>
+                                <div>
+                                    <button style="border-radius: 4px 0 0 4px; margin-right: -5px;" class="quantity-btn" ng-click="incrementQuantity()">+</button>
+                                    <input min="1" type="number" class="quantity-input" ng-model="quantity" ng-change="updateQuantity()" />
+                                    <button style="border-radius: 0 4px 4px 0; margin-left: -5px;" class="quantity-btn" ng-click="decrementQuantity()">-</button>
+                                </div>
+                                <p class="quantity-info">{{localStorageProduct.quantity_stock}} sản phẩm có sẵn</p>
+                            </div>
+                            <p class="error" style="color: red;" ng-show="showError">Số lượng đặt bị sai!</p>
+                            <div class="button">
+                                <button style="margin-left: -10px;" class="button-on" ng-click="addtoCart()">Thêm vào giỏ hàng
+                                </button>
+                                <button class="button-off" ng-click="buyNow()">Mua hàng ngay</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="detail-content">
+                    <div class="product-infomation">
+                        <h4>Thông tin chi tiết</h4>
+                        <ul>
+                            <li>Thương hiệu: {{localStorageProduct.brand.name}}</li>
+                            <li>Đối tượng sử dung: {{localStorageProduct.gender.name}}</li>
+                            <li>Dòng máy: {{localStorageProduct.machinetype.name}}</li>
+                            <li>Chất liệu dây: {{localStorageProduct.strap.name}}</li>
+                            <li>Chất liệu kính: {{localStorageProduct.glassmaterial.name}}</li>
+                            <li>Kháng nước: {{localStorageProduct.feature.name}}</li>
+                            <li>Xuất xứ: {{localStorageProduct.origin.name}}</li>
+                            <li>Chất liệu vỏ: {{localStorageProduct.casematerial.name}}</li>
+                            <li>Hình dạng: {{localStorageProduct.shape.name}}</li>
+                            <li>Màu vỏ: {{localStorageProduct.casecolor.name}}</li>
+                            <li>Phong cách: Cổ điển</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content" id="blog-content">
+                    <div class="product-blog">
+                        <h3>Hello</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="left">
+                    <img src="/image/images/{{localStorageProduct.images[0].image_link}}" alt="" id="left-image">
+                    <!-- <img src="/image/giay5.webp" alt="" id="left-image"> -->
+                    <i class='bx bxs-heart' title="Thêm vào danh sách yêu thích"></i>
+                    <!-- <div class="button-slide">
+                        <button class="btn-prev">
+                            &lt; </button>
+                        <button class="btn-next">&gt;</button>
+                    </div> -->
+                </div>
+                <div class="right">
+                    <!-- <ul>
+                        <li><img src="/image/giay5.webp" alt=""></li>
+                        <li><img src="/image/giay1.webp" alt=""></li>
+                        <li><img src="/image/giay2.webp" alt=""></li>
+                        <li><img src="/image/giay3.webp" alt=""></li>
+                        <li><img src="/image/giay4.webp" alt=""></li>
+                        <li><img src="/image/giay3.webp" alt=""></li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+        <!-- <div class="detail-3" style="justify-content: sta;">
+            <h3>Đánh giá sản phẩm</h3>
+            <div>
+
+            </div>
+            <h3>
+                Explore the Nike Blazer Mid '77 Vintage Men's Shoes
+            </h3>
+            <img src="/image/image (1).jpg" alt="">
+            <h3>
+                Explore the Nike Blazer Mid '77 Vintage Men's Shoes
+            </h3>
+            <img src="/image/image.jpg" alt="">
+            <h3>
+                Explore the Nike Blazer Mid '77 Vintage Men's Shoes
+            </h3>
+            <img src="/image/image (2).jpg" alt="">
+            <h3>
+                Explore the Nike Blazer Mid '77 Vintage Men's Shoes
+            </h3>
+        </div> -->
+        <div style="background-color: #ecf6ff;">
+            <h3 style="margin-top: 40px; margin-left: 20px;">Đánh giá sản phẩm</h3>
+            <p ng-show="checkRong">Chưa có đánh giá về sản phẩm này!</p>
+            <div ng-repeat="danhgia in danhgiasanpham" style="margin: 25px 0 25px 25px;" ng-if="danhgia.watchdetail.product.name === localStorageProduct.product.name">
+                <p style="font-size: 17px;font-weight: 550; margin-bottom: 0;">{{danhgia.hoadonchitiet.order.account.email}}- Ngày đăng: {{danhgia.create_date}}</p>
+                <div class="star-rating" style="margin: 15px 0;" ng-show="danhgia.diem === 1">
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    
+                </div>
+                <!-- 2 -->
+                <div class="star-rating" style="margin: 15px 0;" ng-show="danhgia.diem === 2">
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                </div>
+                <!-- 3 -->
+                <div class="star-rating" style="margin: 15px 0;" ng-show="danhgia.diem === 3">
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                </div>
+                <!-- 4 -->
+                <div class="star-rating" style="margin: 15px 0;" ng-show="danhgia.diem === 4">
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                </div>
+                <!-- 5 -->
+                <div class="star-rating" style="margin: 15px 0;" ng-show="danhgia.diem === 5">
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                    <span style="color: #0188ff;">
+                        &#9733;
+                    </span>
+                </div>
+                <p>{{danhgia.comment}}</p>
+                <div id="image-container">
+                    <img ng-show="danhgia.image_link1" ng-src="{{danhgia.image_link1}}" alt="Selected Image" class="selected-image"/>
+                    <img ng-show="danhgia.image_link2" ng-src="{{danhgia.image_link2}}" alt="Selected Image" class="selected-image"/>
+                    <img ng-show="danhgia.image_link3" ng-src="{{danhgia.image_link3}}" alt="Selected Image" class="selected-image"/>
+                </div>
+                <!-- <p>{{danhgia.create_date}}</p> -->
+                <hr style="margin-left: -20px;">
+            </div>
+        </div>
+        <div class="detail-4" style="margin-top: 50px;">
+            <div class="head-detail">
+                <h3 class="head-detail-4">Sản phẩm tương tự</h3>
+                <div class="button-slide-product">
+                    <button ng-click="previousPage()" class="btn-prev-product">
+                        &lt; </button>
+                    <button ng-click="nextPage()" class="btn-next-product">&gt;</button>
+                </div>
+            </div>
+            <div class="container">
+                <div class="product-items">
+                    <div class="product" ng-repeat="watch in displayedProducts">
+                        <div class="product-content">
+                            <div class="product-img" ng-click="detailProduct(watch)">
+                                <a>
+                                    <img ng-src="/image/images/{{watch.images[0].image_link}}" alt="product image">
+                                </a>
+                            </div>
+                            <div class="product-btns">
+                                <button type="button" class="btn-cart" ng-click="addtoCart(watch)"> add to cart
+                                    <span><i class="fas fa-plus"></i></span>
+                                </button>
+                                <button type="button" class="btn-buy" ng-click="buyNow(watch)"> buy now
+                                    <span><i class="fas fa-shopping-cart"></i></span>
+                                </button>
+                                <button type="button" class="btn-love"> add to love
+                                    <span>
+                                        <i class='bx bxs-heart'></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="product-info" style="height: 220px;">
+                            <div class="product-info-top">
+                                <div class="rating">
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span ng-show="star"><i class="far fa-star"></i></span>
+                                </div>
+                                <h2 class="sm-title">{{watch.brand.name}}</h2>
+                            </div>
+                            <a href="#" class="product-name" title="{{watch.product.name}}">{{watch.product.name}}</a>
+                            <p class="product-price" ng-show="watch.giamoi">{{watch.price}} VND</p>
+                            <p class="product-price" ng-show="watch.giamoi">{{watch.giamoi}} VND</p>
+                            <p ng-show="!watch.giamoi" style="margin: 1rem 0;">{{watch.price}} VND</p>
+                        </div>
+
+                        <div class="off-info" ng-show="watch.giamgia">
+                            <h2 class="sm-title">{{watch.giamgia}}% off</h2>
+                        </div>
+                    </div>
+
+                    <!-- <div class="off-info">
+                            <h2 class="sm-title">25% off</h2>
+                        </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

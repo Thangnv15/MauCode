@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/main/css/product.css">
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="product-page">
+        <div class="product-left">
+            <div class="header-product-left">
+                <h3>Lọc</h3>
+                <h4 ng-click="clearFilters()" style="cursor: pointer;">Xóa lọc</h4>
+            </div>
+            <div class="filter">
+                <!-- Price -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" ng-click="togglePriceDropdown()">
+                        <h4>Khoảng giá</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isPriceDropdownVisible, 'bxs-chevron-down': !isPriceDropdownVisible}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" ng-show="isPriceDropdownVisible">
+                        <input class="custom-input" type="text" ng-model="selectedValues.priceFrom" placeholder="Từ"
+                            ng-change="validatePrice()">
+                        <div ng-show="priceFromError" class="error-price">
+                            Vui lòng nhập số.
+                        </div>
+                        <!-- Giá cố định cho priceTo -->
+                        <input class="custom-input" type="text" ng-model="selectedValues.priceTo" placeholder="Đến"
+                            ng-change="validatePrice()">
+                        <div ng-show="priceToError" class="error-price">
+                            Vui lòng nhập số.
+                        </div>
+                    </div>
+                    <div ng-show="comparePrice" class="error-price">
+                        Giá nhập không hợp lệ
+                    </div>
+                </div>
+
+                <!-- Thuong hieu -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" id="filter_sizeMat_header" ng-click="toggleDropdownThuongHieu()">
+                        <h4>Thương hiệu</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isDropdownVisibleThuongHieu, 'bxs-chevron-down': !isDropdownVisibleThuongHieu}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" id="content_filter_sizeMat"
+                        ng-show="isDropdownVisibleThuongHieu">
+                        <ul>
+                            <li ng-repeat="thuongHieu in thuongHieu">
+                                <label>
+                                    <input type="radio" ng-model="selectedValues.thuongHieu" ng-value="thuongHieu"
+                                        name="thuongHieu">
+                                    {{ thuongHieu.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Mau vo -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" id="filter_sizeMat_header" ng-click="toggleDropdownMauVo()">
+                        <h4>Màu vỏ</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isDropdownVisibleMauVo, 'bxs-chevron-down': !isDropdownVisibleMauVo}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" id="content_filter_sizeMat" ng-show="isDropdownVisibleMauVo">
+                        <ul>
+                            <li ng-repeat="caseColor in caseColor">
+                                <label>
+                                    <input type="radio" ng-model="selectedValues.caseColor" ng-value="caseColor"
+                                        name="sizeMat"> {{ caseColor.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Chat lieu vo -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" id="filter_sizeMat_header" ng-click="toggleDropdownChatlieuvo()">
+                        <h4>Loại vỏ</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isDropdownVisibleChatlieuvo, 'bxs-chevron-down': !isDropdownVisibleChatlieuvo}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" id="content_filter_sizeMat"
+                        ng-show="isDropdownVisibleChatlieuvo">
+                        <ul>
+                            <li ng-repeat="caseMaterial in caseMaterial">
+                                <label>
+                                    <input type="radio" ng-model="selectedValues.caseMaterial" ng-value="caseMaterial"
+                                        name="chatLieuVo"> {{ caseMaterial.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Tính năng -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" id="filter_sizeMat_header" ng-click="toggleDropdownTinhnang()">
+                        <h4>Tính năng</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isDropdownVisibleTinhnang, 'bxs-chevron-down': !isDropdownVisibleTinhnang}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" id="content_filter_sizeMat" ng-show="isDropdownVisibleTinhnang">
+                        <ul>
+                            <li ng-repeat="feature in feature">
+                                <label>
+                                    <input type="radio" ng-model="selectedValues.feature" ng-value="feature"
+                                        name="tinhNang"> {{ feature.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Chat lieu kinh -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" id="filter_sizeMat_header"
+                        ng-click="toggleDropdownChatlieukinh()">
+                        <h4>Loại kính</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isDropdownVisibleChatlieukinh, 'bxs-chevron-down': !isDropdownVisibleChatlieukinh}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" id="content_filter_sizeMat"
+                        ng-show="isDropdownVisibleChatlieukinh">
+                        <ul>
+                            <li ng-repeat="glassMaterial in glassMaterial">
+                                <label>
+                                    <input type="radio" ng-model="selectedValues.glassMaterial" ng-value="glassMaterial"
+                                        name="chatLieuKinh"> {{ glassMaterial.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Dongmay -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" id="filter_sizeMat_header" ng-click="toggleDropdownDongmay()">
+                        <h4>Dòng máy</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isDropdownVisibleDongmay, 'bxs-chevron-down': !isDropdownVisibleDongmay}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" id="content_filter_sizeMat" ng-show="isDropdownVisibleDongmay">
+                        <ul>
+                            <li ng-repeat="machineType in machineType">
+                                <label>
+                                    <input type="radio" ng-model="selectedValues.machineType" ng-value="machineType"
+                                        name="dongMay"> {{ machineType.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Xuatxu -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" id="filter_sizeMat_header" ng-click="toggleDropdownXuatxu()">
+                        <h4>Xuất xứ</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isDropdownVisibleXuatxu, 'bxs-chevron-down': !isDropdownVisibleXuatxu}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" id="content_filter_sizeMat" ng-show="isDropdownVisibleXuatxu">
+                        <ul>
+                            <li ng-repeat="origin in origin">
+                                <label>
+                                    <input type="radio" ng-model="selectedValues.origin" ng-value="origin"
+                                        name="xuatXu"> {{ origin.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Hinhdang -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" id="filter_sizeMat_header" ng-click="toggleDropdownHinhdang()">
+                        <h4>Hình dạng</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isDropdownVisibleHinhdang, 'bxs-chevron-down': !isDropdownVisibleHinhdang}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" id="content_filter_sizeMat" ng-show="isDropdownVisibleHinhdang">
+                        <ul>
+                            <li ng-repeat="shape in shape">
+                                <label>
+                                    <input type="radio" ng-model="selectedValues.shape" ng-value="shape"
+                                        name="hinhDang"> {{ shape.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Day -->
+                <div class="filter-sizeMat">
+                    <div class="filter-sizeMat-header" id="filter_sizeMat_header" ng-click="toggleDropdownDay()">
+                        <h4>Loại dây</h4>
+                        <i class="bx"
+                            ng-class="{'bxs-chevron-up': isDropdownVisibleDay, 'bxs-chevron-down': !isDropdownVisibleDay}"></i>
+                    </div>
+                    <div class="content-filter-sizeMat" id="content_filter_sizeMat" ng-show="isDropdownVisibleDay">
+                        <ul>
+                            <li ng-repeat="strap in strap">
+                                <label>
+                                    <input type="radio" ng-model="selectedValues.strap" ng-value="strap" name="loaiDay">
+                                    {{ strap.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-apdung" ng-click="applyFilters()">Áp dụng</button>
+        </div>
+        <div class="product-right">
+            <div class="rebub" ng-show="catesName || catesNameBrand">
+                Sản phẩm > Đồng hồ {{catesName}} {{catesNameBrand}}
+            </div>
+            <div class="container">
+                <div class="product-items">
+                    <!-- single product -->
+                    <div class="product" ng-repeat="watch in paginatedWatchs()">
+                        <div class="product-content">
+                            <div class="product-img" ng-click="detailProduct(watch)">
+                                <a>
+                                    <img ng-src="/image/images/{{watch.images[0].image_link}}" alt="product image">
+                                </a>
+                            </div>
+                            <div class="product-btns">
+                                <button type="button" class="btn-cart" ng-click="addtoCart(watch)"> thêm vào giỏ
+                                    <span><i class="fas fa-plus"></i></span>
+                                </button>
+                                <button type="button" class="btn-buy" ng-click="buyNow(watch)"> mua ngay
+                                    <span><i class="fas fa-shopping-cart"></i></span>
+                                </button>
+                                <!-- <button type="button" class="btn-love"> add to love
+                                    <span>
+                                        <i class='bx bxs-heart'></i>
+                                    </span>
+                                </button> -->
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <div class="product-info-top">
+                                <div class="rating">
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="far fa-star"></i></span>
+                                </div>
+                                <h2 class="sm-title">{{watch.brand.name}}</h2>
+                            </div>
+                            <a href="#" class="product-name" title="{{watch.product.name}}">{{watch.product.name}}</a>
+                            <p class="product-price" ng-show="watch.giamoi">{{watch.price}} VND</p>
+                            <p class="product-price" ng-show="watch.giamoi">{{watch.giamoi}} VND</p>
+                            <p ng-show="!watch.giamoi" style="margin: 1rem 0;">{{watch.price}} VND</p>
+                        </div>
+
+                        <div class="off-info" ng-show="watch.giamgia">
+                            <h2 class="sm-title">-{{watch.giamgia}}%</h2>
+                        </div>
+                    </div>
+                    <!-- end of single product -->
+                </div>
+            </div>
+
+            <div class="container-2">
+                <div class="pagination">
+                    <a ng-click="prevPage()">&laquo;</a>
+                    <a ng-repeat="page in getPagesArray(totalPages())" ng-click="goToPage(page)"
+                        ng-class="{ 'active': currentPage === page }">
+                        {{ page }}
+                    </a>
+                    <a ng-click="nextPage()">&raquo;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" ng-show="showFormAddCart">
+        <div class="formAddCart">
+            <button class="closeButton" ng-click="closePopup()">×</button>
+            <div class="image_thongso">
+                <img ng-src="/image/images/{{Productcart.images[0].image_link}}" alt="product image">
+                <div>
+                    <p ng-show="!Productcart.giamoi" class="image_thongso_gia">{{Productcart.price}} <u style="font-size: 18px;">VND</u></p>
+                    <p ng-show="Productcart.giamoi" class="image_thongso_gia">{{Productcart.giamoi}} <u style="font-size: 18px;">VND</u></p>
+                    <div style="display: flex" ng-show="Productcart.giamoi">
+                        <p style="text-decoration: line-through; color: gray;">{{Productcart.price}} VND</p>
+                        <p style="margin-left: 5px; color: #0188ff; border-radius: 8px; background-color: #bce0ff; outline: none; width: 40px; height: 30px;">-{{Productcart.giamgia}}%</p>
+                    </div>
+                    <p class="image_thongso_ten" style="margin: 0 !important;">
+                        {{Productcart.product.name}},&nbsp;&nbsp;{{Productcart.casecolor.name}},&nbsp;&nbsp;{{sizeShow}}
+                    </p>
+                </div>
+            </div>
+            <div style="margin-top: 25px;">
+                <p>Kích cỡ</p>
+                <ul style="list-style: none; display: flex; flex-wrap: wrap;">
+                    <li ng-repeat="product in filteredProducts" ng-click="selectProductDetail(product)"
+                        ng-class="{ 'selectedProductDetailCart': product.isSelected }">
+                        <p style="margin: 0 !important;">{{product.size.name}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div
+                style="margin-top: 25px; display: flex; justify-content: space-between; align-items: center; text-align: center;">
+                <p>Số lượng </p>
+                <div>
+                    <button class="prev" style="background-color: white;" ng-click="decrementQuantity()">&lt;</button>
+                    <input ng-model="quantityCart" class="middle" type="number" ng-change="updateQuantity()">
+                    <button class="next" style="background-color: white;" ng-click="incrementQuantity()">&gt;</button>
+                </div>
+            </div>
+            <div style="margin-top: 10px; display: flex; justify-content: space-between;align-items: center; ">
+                <p>Có thể bán {{Productcart.quantity_stock}}</p>
+                <button class="addtoCart" ng-click="themvaogio()" ng-class="{ 'disabled': showSoLuongLoi }">Thêm vào giỏ
+                    hàng</button>
+            </div>
+            <div class="error" ng-show="showSoLuongLoi">
+                Số lượng mua không phù hợp
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>

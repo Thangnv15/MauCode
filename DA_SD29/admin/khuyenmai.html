@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thương hiệu</title>
+    <link rel="stylesheet" href="khuyenmai.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Quản lý Giảm Giá</h1>
+                </div>
+                <!-- <a href="#" class="report" id="openPopup">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span>Thêm thương hiệu</span>
+                </a> -->
+            </div>
+            <!-- Popup -->
+            <div class="popup" id="popup">
+                <div class="popup-content">
+                    <span class="close" id="closePopup">&times;</span>
+                    <h2>Thêm thương hiệu</h2>
+                    <form class="form-popup">
+                        <div>
+                            <h4>Tên</h4>
+                            <input type="text" class="custom-input" placeholder="Điền tên thương hiệu">
+                        </div>
+                        <div class="button">
+                            <button>Thêm mới</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- End popup -->
+            <div class="listKM">
+                <!-- <h3 style="margin-bottom: 10px;">Các loại giảm giá</h3> -->
+                <div class="contentKM">
+                    <!-- <div>
+                        <div style="margin-bottom: 10px;">
+                            <img style="margin-right: 5px;" src="/image/shopping-bag.png" alt="">
+                            Voucher toàn Shop
+                        </div>
+                        <p>Voucher áp dụng cho tất cả sản phẩm trong Shop</p>
+                        <hr style="margin-top: 3px;">
+                        <div style="margin-top: 15px; color: #0188ff; cursor: pointer;">
+                            Tạo <i class='bx bx-chevron-right'></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="margin-bottom: 10px;">
+                            <img style="margin-right: 5px;" src="/image/promotions.png" alt="">
+                            Voucher sản phẩm
+                        </div>
+                        <p>Voucher chỉ áp dụng cho những sản phẩm nhất định mà Shop chọn</p>
+                        <hr style="margin-top: 3px;">
+                        <div style="margin-top: 15px; color: #0188ff; cursor: pointer;">
+                            Tạo <i class='bx bx-chevron-right'></i>
+                        </div>
+                    </div> -->
+                    <div>
+                        <div style="margin-bottom: 10px;">
+                            <img style="margin-right: 5px;" src="/image/promotion.png" alt="">
+                            Khuyến mãi sản phẩm
+                        </div>
+                        <p>Đặt chiết khấu trực tiếp trên sản phẩm</p>
+                        <br>
+                        <hr style="margin-top: 3px;">
+                        <div ng-click="chuyenKhuyenMai3()" style="margin-top: 15px; color: #0188ff; cursor: pointer;">
+                            Tạo <i class='bx bx-chevron-right'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-product">
+                <h3 style="margin-bottom: 15px;">Danh sách chương trình</h3>
+                <ul>
+                    <li ng-click="selectTab('all')" ng-class="{ 'active': isSelected('all') }">Tất cả</li>
+                    <li ng-click="selectTab('dangDienRa')" ng-class="{ 'active': isSelected('dangDienRa') }">Đang diễn
+                        ra</li> <!--0-->
+                    <li ng-click="selectTab('sapDienRa')" ng-class="{ 'active': isSelected('sapDienRa') }">Sắp diễn ra
+                    </li><!--1-->
+                    <li ng-click="selectTab('daKetThuc')" ng-class="{ 'active': isSelected('daKetThuc') }">Đã kết thúc
+                    </li>
+                    <!--2-->
+                    <li ng-click="selectTab('dangDung')" ng-class="{ 'active': isSelected('dangDung') }">Đang dừng</li>
+                    <!--3-->
+                </ul>
+            </div>
+            <div class="danhsach-thuoctinh" ng-show="isSelected('all')">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Danh sách</h3>
+                            <div class="tienich">
+                                <div style="position: relative;">
+                                    <input class="input-timkiem" type="text" placeholder="Điền tên khuyến mãi cần tìm"
+                                        ng-model="searchMaHD" ng-keyup="searchOrders(searchMaHD)">
+                                    <i class='bx bx-search' style="position: absolute; right: 5px;top: 5px; font-size: 20px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên chương trình</th>
+                                    <th>Loại giảm giá</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thời gian</th>
+                                    <th>Hành động</th>
+                                    <!-- Xóa, cập nhập, ngưng -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="vh3 in voucher3s">
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.name}}
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.loaivoucher === 1">Voucher toàn shop</span>
+                                            <span ng-if="vh3.loaivoucher === 2">Voucher sản phẩm</span>
+                                            <span ng-if="vh3.loaivoucher === 3">Chiết khấu sản phẩm</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.status === 1" style="color: orange">Sắp diễn ra</span>
+                                            <span ng-if="vh3.status === 2" style="color: green;">Đang diễn ra</span>
+                                            <span ng-if="vh3.status === 3" style="color: #0188ff;">Đã kết thúc</span>
+                                            <span ng-if="vh3.status === 4" style="color: orangered;">Đã ngưng</span>
+                                            <span ng-if="vh3.status === 0" >Không xác định</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.ngaybatdau}}
+                                        </p>
+                                        <p>
+                                            {{vh3.ngayketthuc}}
+                                        </p>
+                                    </td>
+                                    <td style="font-size: 16px; color: #0188ff; font-weight: 550;">
+                                        <p style="margin: 5px;" ng-click="chinhSua(vh3)">Chỉnh sửa</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status !==3 && vh3.status !== 4" ng-click="ngungKM(vh3)">Ngưng hoạt động</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status===4" ng-click="tiepTuc(vh3)">Tiếp tục</p>
+                                        <p style="margin: 5px;" ng-click="xoaKM3(vh3)">Xóa</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="isSelected('dangDienRa')">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>List</h3>
+                            <div class="tienich">
+                                <div style="position: relative;">
+                                    <input class="input-timkiem" type="text" placeholder="Điền tên khuyến mãi cần tìm"
+                                        ng-model="searchMaHD" ng-keyup="searchOrders(searchMaHD)">
+                                    <i class='bx bx-search' style="position: absolute; right: 5px;top: 5px; font-size: 20px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên chương trình</th>
+                                    <th>Loại giảm giá</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thời gian</th>
+                                    <th>Hành động</th>
+                                    <!-- Xóa, cập nhập, ngưng -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="vh3 in voucher3s" ng-if="vh3.status === 2">
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.name}}
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.loaivoucher === 1">Voucher toàn shop</span>
+                                            <span ng-if="vh3.loaivoucher === 2">Voucher sản phẩm</span>
+                                            <span ng-if="vh3.loaivoucher === 3">Chiết khấu sản phẩm</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.status === 1" style="color: orange">Sắp diễn ra</span>
+                                            <span ng-if="vh3.status === 2" style="color: green;">Đang diễn ra</span>
+                                            <span ng-if="vh3.status === 3" style="color: #0188ff;">Đã kết thúc</span>
+                                            <span ng-if="vh3.status === 4" style="color: orangered;">Đã ngưng</span>
+                                            <span ng-if="vh3.status === 0" >Không xác định</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.ngaybatdau}}
+                                        </p>
+                                        <p>
+                                            {{vh3.ngayketthuc}}
+                                        </p>
+                                    </td>
+                                    <td style="font-size: 16px; color: #0188ff; font-weight: 550;">
+                                        <p style="margin: 5px;" ng-click="chinhSua(vh3)">Chỉnh sửa</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status !==3 && vh3.status !== 4" ng-click="ngungKM(vh3)">Ngưng hoạt động</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status===4" ng-click="tiepTuc(vh3)">Tiếp tục</p>
+                                        <p style="margin: 5px;" ng-click="xoaKM3(vh3)">Xóa</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="isSelected('sapDienRa')">
+               <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>List</h3>
+                            <div class="tienich">
+                                <div style="position: relative;">
+                                    <input class="input-timkiem" type="text" placeholder="Điền tên khuyến mãi cần tìm"
+                                        ng-model="searchMaHD" ng-keyup="searchOrders(searchMaHD)">
+                                    <i class='bx bx-search' style="position: absolute; right: 5px;top: 5px; font-size: 20px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên chương trình</th>
+                                    <th>Loại giảm giá</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thời gian</th>
+                                    <th>Hành động</th>
+                                    <!-- Xóa, cập nhập, ngưng -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="vh3 in voucher3s" ng-if="vh3.status === 1">
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.name}}
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.loaivoucher === 1">Voucher toàn shop</span>
+                                            <span ng-if="vh3.loaivoucher === 2">Voucher sản phẩm</span>
+                                            <span ng-if="vh3.loaivoucher === 3">Chiết khấu sản phẩm</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.status === 1" style="color: orange">Sắp diễn ra</span>
+                                            <span ng-if="vh3.status === 2" style="color: green;">Đang diễn ra</span>
+                                            <span ng-if="vh3.status === 3" style="color: #0188ff;">Đã kết thúc</span>
+                                            <span ng-if="vh3.status === 4" style="color: orangered;">Đã ngưng</span>
+                                            <span ng-if="vh3.status === 0" >Không xác định</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.ngaybatdau}}
+                                        </p>
+                                        <p>
+                                            {{vh3.ngayketthuc}}
+                                        </p>
+                                    </td>
+                                    <td style="font-size: 16px; color: #0188ff; font-weight: 550;">
+                                        <p style="margin: 5px;" ng-click="chinhSua(vh3)">Chỉnh sửa</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status !==3 && vh3.status !== 4" ng-click="ngungKM(vh3)">Ngưng hoạt động</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status===4" ng-click="tiepTuc(vh3)">Tiếp tục</p>
+                                        <p style="margin: 5px;" ng-click="xoaKM3(vh3)">Xóa</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="isSelected('daKetThuc')">
+               <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>List</h3>
+                            <div class="tienich">
+                                <div style="position: relative;">
+                                    <input class="input-timkiem" type="text" placeholder="Điền tên khuyến mãi cần tìm"
+                                        ng-model="searchMaHD" ng-keyup="searchOrders(searchMaHD)">
+                                    <i class='bx bx-search' style="position: absolute; right: 5px;top: 5px; font-size: 20px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên chương trình</th>
+                                    <th>Loại giảm giá</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thời gian</th>
+                                    <th>Hành động</th>
+                                    <!-- Xóa, cập nhập, ngưng -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="vh3 in voucher3s" ng-if="vh3.status === 3">
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.name}}
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.loaivoucher === 1">Voucher toàn shop</span>
+                                            <span ng-if="vh3.loaivoucher === 2">Voucher sản phẩm</span>
+                                            <span ng-if="vh3.loaivoucher === 3">Chiết khấu sản phẩm</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.status === 1" style="color: orange">Sắp diễn ra</span>
+                                            <span ng-if="vh3.status === 2" style="color: green;">Đang diễn ra</span>
+                                            <span ng-if="vh3.status === 3" style="color: #0188ff;">Đã kết thúc</span>
+                                            <span ng-if="vh3.status === 4" style="color: orangered;">Đã ngưng</span>
+                                            <span ng-if="vh3.status === 0" >Không xác định</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.ngaybatdau}}
+                                        </p>
+                                        <p>
+                                            {{vh3.ngayketthuc}}
+                                        </p>
+                                    </td>
+                                    <td style="font-size: 16px; color: #0188ff; font-weight: 550;">
+                                        <p style="margin: 5px;" ng-click="chinhSua(vh3)">Chỉnh sửa</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status !==3 && vh3.status !== 4" ng-click="ngungKM(vh3)">Ngưng hoạt động</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status===4" ng-click="tiepTuc(vh3)">Tiếp tục</p>
+                                        <p style="margin: 5px;" ng-click="xoaKM3(vh3)">Xóa</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="isSelected('dangDung')">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>List</h3>
+                            <div class="tienich">
+                                <div style="position: relative;">
+                                    <input class="input-timkiem" type="text" placeholder="Điền tên khuyến mãi cần tìm"
+                                        ng-model="searchMaHD" ng-keyup="searchOrders(searchMaHD)">
+                                    <i class='bx bx-search' style="position: absolute; right: 5px;top: 5px; font-size: 20px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên chương trình</th>
+                                    <th>Loại giảm giá</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thời gian</th>
+                                    <th>Hành động</th>
+                                    <!-- Xóa, cập nhập, ngưng -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="vh3 in voucher3s" ng-if="vh3.status === 4">
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.name}}
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.loaivoucher === 1">Voucher toàn shop</span>
+                                            <span ng-if="vh3.loaivoucher === 2">Voucher sản phẩm</span>
+                                            <span ng-if="vh3.loaivoucher === 3">Chiết khấu sản phẩm</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            <span ng-if="vh3.status === 1" style="color: orange">Sắp diễn ra</span>
+                                            <span ng-if="vh3.status === 2" style="color: green;">Đang diễn ra</span>
+                                            <span ng-if="vh3.status === 3" style="color: #0188ff;">Đã kết thúc</span>
+                                            <span ng-if="vh3.status === 4" style="color: orangered;">Đã ngưng</span>
+                                            <span ng-if="vh3.status === 0" >Không xác định</span>
+                                        </p>
+                                    </td>
+                                    <td class="tb-ten">
+                                        <p>
+                                            {{vh3.ngaybatdau}}
+                                        </p>
+                                        <p>
+                                            {{vh3.ngayketthuc}}
+                                        </p>
+                                    </td>
+                                    <td style="font-size: 16px; color: #0188ff; font-weight: 550;">
+                                        <p style="margin: 5px;" ng-click="chinhSua(vh3)">Chỉnh sửa</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status !==3 && vh3.status !== 4" ng-click="ngungKM(vh3)">Ngưng hoạt động</p>
+                                        <p style="margin: 5px;" ng-show="vh3.status===4" ng-click="tiepTuc(vh3)">Tiếp tục</p>
+                                        <p style="margin: 5px;" ng-click="xoaKM3(vh3)">Xóa</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

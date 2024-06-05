@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thương hiệu</title>
+    <link rel="stylesheet" href="thuonghieu.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Quản lý thương hiệu</h1>
+                </div>
+                <a ng-click="openThuongHieu()" class="report" id="openPopup" style="cursor: pointer;">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span >Thêm thương hiệu</span>
+                </a>
+            </div>
+            <!-- Popup -->
+            <div class="popup" id="popup" ng-show="themThuongHieu">
+                <div class="popup-content">
+                    <span class="close" id="closePopup" ng-click="closeThuongHieu()">&times;</span>
+                    <h2>Thêm thương hiệu</h2>
+                    <form class="form-popup">
+                        <div>
+                            <h4>Tên</h4>
+                            <input type="text" class="custom-input" placeholder="Điền tên thương hiệu" ng-model="nameThuongHieu">
+                        </div>
+                        <span style="color: red; font-size: 13px;" ng-show="errorThuongHieu">Đã tồn tại</span>
+                        <div class="button">
+                            <button ng-click="addThuongHieu()">Thêm mới</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="popup" id="popup" ng-show="capnhapThuongHieu">
+                <div class="popup-content">
+                    <span class="close" id="closePopup" ng-click="closeUpdateThuongHieu()">&times;</span>
+                    <h2>Cập nhập thương hiệu</h2>
+                    <form class="form-popup">
+                        <div>
+                            <h4>Giá trị cũ - {{brandCapNhap.name}}</h4>
+                            <input type="text" class="custom-input" placeholder="Điền giá trị" ng-model="nameThuongHieuUpdate">
+                        </div>
+                        <span style="color: red; font-size: 13px;" ng-show="errorThuongHieuUpdate">Đã tồn tại</span>
+                        <div class="button">
+                            <button ng-click="updateThuongHieu()">Cập nhập</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- End popup -->
+
+            <!-- <div class="tab-product">
+                <ul>
+                    <li onclick="showDanhSachThuocTinh()" class="active">Danh sách thương hiệu</li>
+                    <li onclick="showThuocTinhTrong()">Thương hiệu trống</li>
+                </ul>
+            </div> -->
+            <div class="danhsach-thuoctinh">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Danh sách</h3>
+                            <!-- <div class="tienich">
+                                <div class="search-product" id="search-container">
+                                    <p></p>
+                                    <input type="text" placeholder="Điền sản phẩm cần tìm">
+                                    <i class='bx bx-search' id="search-icon"></i>
+                                </div>
+                                <i class='bx bx-x' id="close-icon"></i>
+                            </div> -->
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="brand in brands">
+                                    <td>
+                                        <p>{{brand.name}}</p>
+                                    </td>
+                                    <td>
+                                        <h4 style="color: #0188ff;" ng-click="openUpdateThuongHieu(brand)">Chỉnh sửa</h4>
+                                    </td>
+                                    <td ng-if="brand.notXoa !== true ">
+                                        <h4 style="color: #0188ff;" ng-click="xoaThuongHieu(brand)">Xóa</h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

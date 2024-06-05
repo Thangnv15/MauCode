@@ -1,0 +1,59 @@
+.carousel-item {
+    position: relative;
+    display: inline-block;
+}
+
+.image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: floralwhite;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.bton button {
+    background-color: white;
+    color: white;
+    border: none;
+}
+
+.bton button:hover {
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+#ct_right {
+    height: 250px;
+    width: 560px;
+    background-color: white;
+    margin-left: 15px;
+    background-repeat: no-repeat;
+    background-size: 38%;
+    background-position: 230px;
+}
+
+#ct_left {
+    height: 250px;
+    width: 560px;
+    background-color: white;
+    margin-right: 15px;
+    background-repeat: no-repeat;
+    background-size: 45%;
+    background-position: 230px;
+}
+
+#ct_right:hover{
+    box-shadow: -2.25px 2px 5px gray;
+    background-size: 50%;
+    font-size: 17px;
+}
+#ct_left:hover{
+    box-shadow: -2.25px 2px 5px gray;
+    background-size:55%;
+    font-size: 17px;
+}

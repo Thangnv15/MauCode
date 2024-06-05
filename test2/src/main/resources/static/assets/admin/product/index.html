@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container nav-tabs" id="accordion">
+    <p>
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseTwo">
+            Product of List
+        </a>
+        <a class="collapsed btn btn-primary" data-bs-toggle="collapse" href="#collapseOne">
+            ProductEditions
+        </a>
+    </p>
+<!--Edit-->
+        <div id="collapseOne" class="collapse" data-bs-parent="#accordion">
+            <div class="col-sm-12 row">
+                <div class="col-sm-4">
+                    <img style="width: 80%;height: 90%" ng-src="{{form.image}}">
+                </div>
+                <div class="col-sm-4">
+                    <label>Tên</label>
+                    <input ng-model="form.ten" class="form-control" placeholder="Tên sản phẩm" type="text">
+                    <label>Giá</label>
+                    <input ng-model="form.gia" class="form-control" type="number" step="1" min="0">
+                    <label>Ngày cập nhập</label>
+                    <input ng-model="form.ngaycapnhap" class="form-control" placeholder="Ngày cập nhập" type="date">
+
+                    <label>Số lượng</label>
+                    <input ng-model="form.soluong" class="form-control" type="number" step="1" min="0">
+                    <label>Image</label>
+<!--                    <input class="form-control" type="file"-->
+<!--                           onchange="angular.element(this).scope().imageChanged(this.files)">-->
+
+                    <input class="form-control" type="file" id="fileInput" ng-model="form.image">
+                    <label>Mô tả</label>
+                    <textarea ng-model="form.mota" class="form-control" placeholder="Mô tả" rows="4"></textarea>
+                </div>
+                <div class="col-sm-4">
+                    <label>Loại giày</label>
+                    <select class="form-control" ng-model="form.loaigiay.id">
+                        <option ng-repeat="c in references.cates" ng-value="c.id">{{c.ten}}</option>
+                    </select>
+                    <label>Hãng</label>
+                    <select class="form-control" ng-model="form.hang.id">
+                        <option ng-repeat="c in references.hang" ng-value="c.id">{{c.ten}}</option>
+                    </select>
+                    <label>Kích cỡ</label>
+                    <select class="form-control" ng-model="form.kichco.id">
+                        <option ng-repeat="c in references.kichco" ng-value="c.id">{{c.giatri}}</option>
+                    </select>
+                    <label>Màu sắc</label>
+                    <select class="form-control" ng-model="form.mausac.id">
+                        <option ng-repeat="c in references.mausac" ng-value="c.id">{{c.ten}}</option>
+                    </select>
+                    <label>Chất liệu</label>
+                    <select class="form-control" ng-model="form.chatlieu.id">
+                        <option ng-repeat="c in references.chatlieu" ng-value="c.id">{{c.ten}}</option>
+                    </select>
+                    <label>Thương hiệu</label>
+                    <select class="form-control" ng-model="form.thuonghieu.id">
+                        <option ng-repeat="c in references.thuonghieu" ng-value="c.id">{{c.ten}}</option>
+                    </select>
+                    <label>Xuất xứ</label>
+                    <select class="form-control" ng-model="form.xuatxu.id">
+                        <option ng-repeat="c in references.xuatxu" ng-value="c.id">{{c.ten}}</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="btn btn-light" ng-click="resest()">Resest</button>
+                    <button class="btn btn-light" ng-click="create()">Create</button>
+                    <button class="btn btn-light" ng-click="update()">Update</button>
+                    <button class="btn btn-light" ng-click="delete(form)">Delete</button>
+                </div>
+            </div>
+        </div>
+<!--List-->
+        <div id="collapseTwo" class="collapse show" data-bs-parent="#accordion">
+                <table class="table table-hover">
+                    <thead>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Create Date</th>
+                        <th>Image</th>
+                        <th>Category</th>
+                        <th>Available</th>
+                        <th colspan="2">Action</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in pager.items">
+                            <td>{{item.id}}</td>
+                            <td>{{item.ten}}</td>
+                            <td>{{item.gia}}</td>
+                            <td>{{item.ngaycapnhap}}</td>
+                            <td>{{item.image}}</td>
+                            <td>{{item.loaigiay.ten}}</td>
+                            <td>{{item.soluong == 0?'Hết hàng':'Còn hàng'}}</td>
+                            <td>
+                                <button ng-click="edit(item)" class="btn btn-primary"><a style="color: white;text-decoration: none" data-bs-toggle="collapse" href="#collapseOne">Edit</a></button>
+                                <button ng-click="delete(item)" class="btn btn-danger"><a style="color: white;text-decoration: none">Delete</a></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <button class="btn btn-light" ng-click="pager.first()">First</button>
+                    <button class="btn btn-light" ng-click="pager.prev()">Previous</button>
+                    <button class="btn btn-success" >{{pager.page+1}}of{{pager.count}}</button>
+                    <button class="btn btn-light" ng-click="pager.next()">Next</button>
+                    <button class="btn btn-light" ng-click="pager.last()">Last</button>
+                </div>
+        </div>
+</div>
+</body>
+</html>

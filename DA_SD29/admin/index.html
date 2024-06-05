@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/master/FileSaver.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/qrcode-generator/1.4.4/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <title>Admin</title>
+</head>
+
+<body ng-app="adminapp">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#" class="logo">
+            <!-- <i class='bx bx-code-alt'></i> -->
+            <img src="/admin/images/bee (1).png" alt="">
+            <div class="logo-name"><span>Bee</span>Watch</div>
+        </a>
+        <ul class="side-menu">
+            <li class="active"><a href="#banhang"><i class='bx bxs-dashboard'></i>Bán hàng tại quầy</a></li>
+            <li class="product"><a href="#product"><i class='bx bxs-stopwatch'></i></i>Sản phẩm</a></li>
+            <ul class="sub-menu">
+                <li><a href="#thuongHieu">Thương hiệu</a></li>
+                <li><a href="#dongMay">Dòng máy</a></li>
+                <li><a href="#chatLieuDay">Chất liệu dây</a></li>
+                <li><a href="#chatLieuKinh">Chất liệu kính</a></li>
+                <li><a href="#sizeMat">Size mặt</a></li>
+                <li><a href="#xuatXu">Xuất xứ</a></li>
+                <li><a href="#hinhDang">Hình dạng</a></li> 
+                <li><a href="#mauVo">Màu vỏ</a></li>
+                <li><a href="#tinhNang">Tính năng</a></li>
+            </ul>
+            <li><a href="#khachHang"><i class='bx bx-group'></i>Khách hàng</a></li>
+            <!-- <li><a href="#"><i class='bx bxs-user'></i>Staff</a></li> -->
+            <li><a href="#khuyenMai"><i class='bx bx-cart-download'></i>Giảm giá</a></li>
+            <li><a href="#order"><i class='bx bx-receipt'></i>Hóa đơn</a></li>
+            <li><a href="#hoantra"><i class='bx bx-recycle'></i>Đổi trả</a></li>
+            <li><a href="#thongKe"><i class='bx bxs-dashboard'></i>Thống kê</a></li>
+            <li ng-controller="HeaderController" ng-show="showPhanquyen">
+                <a href="#phanquyen"><i class='bx bxs-component'></i>Phân quyền</a>
+            </li>
+        </ul>
+        <ul class="side-menu" ng-controller="HeaderController">
+            <li>
+                <a class="logout" ng-click="logout()">
+                    <i class='bx bx-log-out-circle'></i>
+                    Đăng xuất
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Main Content -->
+    <div class="content_index" ng-controller="HeaderController" style="position: relative;">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <h3>Xin chào-{{username}}</h3>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            <a style="cursor: pointer;" ng-click="showThongBao()" class="notif">
+                <i class='bx bx-bell'></i>
+                <!-- <span class="count">12</span> -->
+            </a>
+            <!-- <a href="#" class="profile">
+                <img src="images/logo.png">
+            </a> -->
+        </nav>
+        <div class="thongbao" ng-show="showThongBaoFlag">
+            <div ng-repeat="thongbao in thongbaos"
+                style="justify-content: start; margin: 10px 8px;">
+                <p ng-show="thongbao.status === 0 &&  50 > thongbao.soluongsanpham && 500000000 > thongbao.tongtien">Bạn có đơn hàng mới <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> vào ngày {{thongbao.create_date}}</p>
+                <p ng-show="thongbao.status === 0 && thongbao.soluongsanpham > 50">Bạn có đơn hàng mới <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> với hơn <span style="color: red;">50</span> sản phẩm vào ngày {{thongbao.create_date}}</p>
+                <p ng-show="thongbao.status === 0 && thongbao.tongtien > 500000000">Bạn có đơn hàng mới <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> với giá trị đơn hàng lớn hơn <span style="color: red;">500 triệu</span> vào ngày {{thongbao.create_date}}</p>
+                <!-- <p ng-show="thongbao.status === 0">Bạn có đơn hàng mới <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> vào ngày {{thongbao.create_date}}</p> -->
+                <p ng-show="thongbao.status === 1">Đơn hàng <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> đã bị <span style="color: red; font-size: 18px;">Hủy</span> vào ngày {{thongbao.create_date}}</p>
+                <p ng-show="thongbao.status === 2">Hóa đơn <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> đang được yêu cầu hoàn vào ngày {{thongbao.create_date}}</p>
+                <p ng-show="thongbao.status === 3">Khách hàng đã hủy yêu cầu hoàn với hóa đơn <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> vào ngày {{thongbao.create_date}}</p>
+                <hr>
+            </div>
+            <!-- <h3>Hello</h3>
+            <h3>Hello</h3>
+            <h3>Hello</h3> -->
+        </div>
+    </div>
+    <div>
+        <div ng-view></div>
+    </div>
+
+    <script src="index.js"></script>
+    <script src="/admin/js/banhang.js"></script>
+    <script src="/admin/js/product.js"></script>
+    <script src="/admin/js/login-admin.js"></script>
+    <script src="/admin/js/orderAdmin.js"></script>
+    <script src="/admin/js/phanquyen.js"></script>
+    <script src="/admin/js/hoadonhoan.js"></script>
+    <script src="/admin/js/khuyenmai.js"></script>
+    <script src="/admin/js/khuyenmai3.js"></script>
+    <script src="/admin/js/khachhang.js"></script>
+    <script src="/admin/js/thongke.js"></script>
+    <script src="/admin/js/chinhsuachietkhau.js"></script>
+    <script src="/admin/js/thuonghieu.js"></script>
+    <script src="/admin/js/watchService.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Send Code via Email</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script>
+        angular.module('myApp', [])
+            .controller('MainController', function ($scope, $http) {
+                $scope.sendCode = function () {
+                    // Replace 'YOUR_BACKEND_API_ENDPOINT' with the actual backend API endpoint
+                    var backendEndpoint = "http://localhost:8080/api/checkemail/send-code";
+
+                    // Assuming 'code' is the variable holding the code to be sent
+                    var code = $scope.code;
+
+                    $http.post(backendEndpoint, { code: code })
+                        .then(function (response) {
+                            console.log(response.data);
+                            alert('Code sent successfully!');
+                        })
+                        .catch(function (error) {
+                            console.error('Error sending code:', error);
+                            alert('Error sending code. Please try again later.');
+                        });
+                };
+            });
+    </script>
+</head>
+<body ng-controller="MainController">
+    <label for="code">Enter Code:</label>
+    <input type="text" id="code" ng-model="code">
+
+    <button ng-click="sendCode()">Send Code</button>
+</body>
+</html>

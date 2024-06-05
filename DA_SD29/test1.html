@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        .container-radio {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .container-radio input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #ccc;
+            border-radius: 50%;
+        }
+
+        .container-radio input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .container-radio input:checked ~ .checkmark:after {
+            display: block;
+        }
+    </style>
+</head>
+<body ng-controller="myCtrl">
+    <div>
+        <label class="container-radio" ng-repeat="option in thanhtoan">
+            {{ option.name }}
+            <input type="radio" ng-model="selectedPayment" ng-value="option" name="radio" ng-click="showPaymentName(option)">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+    <div ng-show="selectedPayment">
+        <p>Bạn đã chọn phương thức thanh toán: {{ selectedPayment.name }}</p>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('myCtrl', function($scope) {
+            $scope.thanhtoan = [
+                { name: 'Phương thức thanh toán 1' },
+                { name: 'Phương thức thanh toán 2' },
+                { name: 'Phương thức thanh toán 3' }
+            ];
+
+            $scope.showPaymentName = function(option) {
+                alert('Bạn đã chọn: ' + option.name);
+            };
+        });
+    </script>
+</body>
+</html>

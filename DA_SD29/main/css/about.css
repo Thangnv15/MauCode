@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+body {
+    /* border-top: #0188ff solid; */
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+}
+
+/* start about-1 */
+.about-1{
+    margin: 2rem 0 1.5rem 3rem;
+    font-weight: 700;
+}
+/* start about-2 */
+.about-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: black;
+    color: white;
+    margin: 0;
+    height: 310px;
+}
+
+.about-2 div{
+    padding:0 5rem 0 1.5rem;
+    width: 500px;
+}
+
+.about-2 img{
+   width: 220px;
+   height: 270px;
+   /* margin-right: 10rem; */
+}
+
+.about-head{
+    display: flex;
+    justify-content: start;
+    text-align: center;
+    align-items: center;
+}
+.about-2 i{
+    padding: 7px;
+    border-radius: 25px 25px 0 25px;
+    background-color: #0156FF;
+    font-size: 20px;
+    margin-right: 10px;
+}
+/* end about-2 */
+
+/* start about-3 */
+.about-3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    color: black;
+    margin: 0;
+    height: 310px;
+}
+
+.about-3 div{
+    padding:0 1rem 0 0;
+    width: 500px;
+    margin-left: 5rem;
+}
+
+.about-3 img{
+   width: 220px;
+   height: 270px;
+   /* margin-right: 10rem; */
+}
+
+.about-head{
+    display: flex;
+    justify-content: start;
+    text-align: center;
+    align-items: center;
+    padding-left: 2rem;
+}
+.about-3 i{
+    padding: 7px;
+    border-radius: 25px 25px 0 25px;
+    background-color: #0156FF;
+    font-size: 20px;
+    margin-right: 10px;
+    color: white;
+}
+/* end about-3 */
+
+/* Block-quote */
+.block-quote{
+    margin: 0.7rem 17rem;
+    background-color: #d8ecfa;
+}
+.block-quote .content{
+    position: relative;
+    margin: 0 10rem;
+}
+.block-quote .content p{
+    margin-bottom: 40px;
+}
+
+.block-quote .content span{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 50px;
+}
+
+.block-quote .content h1{
+    padding-top: 25px;
+    margin: 0;
+}
+
+.block-quote .content button{
+    padding: 5px;
+    margin-bottom: 2rem;
+    bottom: 0;
+    left: 0;
+    background-color: transparent;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.block-quote .content button:hover{
+    transform: scale(1.05);
+    border: 2px solid #0156FF;
+    border-radius: 25px;
+    color: #0156FF;
+    cursor: pointer;
+}
+/* End block-quote */

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thương hiệu</title>
+    <link rel="stylesheet" href="khachhang.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Danh sách khách hàng</h1>
+                </div>
+                <!-- <a href="#" class="report" id="openPopup">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span>Thêm thương hiệu</span>
+                </a> -->
+            </div>
+            <!-- Popup -->
+            <!-- <div class="popup" id="popup">
+                <div class="popup-content">
+                    <span class="close" id="closePopup">&times;</span>
+                    <h2>Thêm thương hiệu</h2>
+                    <form class="form-popup">
+                        <div>
+                            <h4>Tên</h4>
+                            <input type="text" class="custom-input" placeholder="Điền tên thương hiệu">
+                        </div>
+                        <div class="button">
+                            <button>Thêm mới</button>
+                        </div>
+                    </form>
+                </div>
+            </div> -->
+            <!-- End popup -->
+
+            <!-- <div class="tab-product">
+                <ul>
+                    <li onclick="showDanhSachThuocTinh()" class="active">Danh sách thương hiệu</li>
+                    <li onclick="showThuocTinhTrong()">Thương hiệu trống</li>
+                </ul>
+            </div> -->
+            <div class="danhsach-thuoctinh">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Danh sách</h3>
+                            <div class="tienich">
+                                <div style="position: relative;">
+                                    <input class="input-timkiem" type="text" placeholder="Điền tên khách hàng"
+                                        ng-model="searchTerm" ng-keyup="searchProducts(searchTerm)">
+                                    <i class='bx bx-search' style="position: absolute; right: 5px;top: 5px; font-size: 20px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>email</th>
+                                    <th>Tổng mua</th>
+                                    <th>Tổng hóa đơn</th>
+                                    <th>Thành công</th> 
+                                    <th>Hủy</th>
+                                    <th>Hoàn</th>
+                                    <!-- Có time làm nốt 3 cái này -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="acc in accounts" ng-if="acc.vaitro === 'CUST'">
+                                    <td>
+                                        <p>{{acc.username}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{acc.phone}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{acc.email}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{acc.tongmua}} VND</p>
+                                    </td>
+                                    <td>
+                                        <p>{{acc.tongdon}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{acc.donthanhcong}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{acc.donhuy}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{acc.donhoan}}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

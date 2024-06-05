@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="admin-app">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa đơn</title>
+    <link rel="stylesheet" href="banhang.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+</head>
+
+<body>
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Bán hàng</h1>
+                </div>
+                <a class="report" id="openPopup" ng-click="createNewInvoice()">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span>Thêm hóa đơn</span>
+                </a>
+            </div>
+            <div class="danhsach-hoadon">
+                <ul>
+                    <li ng-repeat="invoice in invoices" ng-click="showInvoice(invoice, $index)"
+                        ng-class="{ 'active': invoice.isActive }">{{invoice.title}}</li>
+                </ul>
+            </div>
+            <div class="noidung">
+                <div class="invoice" ng-repeat="invoice in invoices" ng-show="invoice.isActive">
+                    <p class="head-noidung"></p>
+                    <div class="invoice-noidung">
+                        <div class="invoice-left">
+                            <h3>Thông tin khách hàng</h3>
+                            <div class="contact-left">
+                                <span class="content-left">
+                                    <div>
+                                        <label>Tên khách hàng</label><br>
+                                        <input ng-model="activeInvoice().order.name_user" class="custom-input"
+                                            type="text" placeholder="Tên khách hàng">
+                                    </div>
+                                    <div>
+                                        <label>Số điện thoại <span>*</span></label><br>
+                                        <input ng-model="activeInvoice().order.sdt_user" class="custom-input"
+                                            type="text" placeholder="Số điện thoại khách hàng" ng-pattern="/^[0-9]{10}$/">
+                                    </div>
+                                </span>
+                                <div>
+                                    <label>Địa chỉ chi tiết <span>*</span></label><br>
+                                    <textarea ng-model="activeInvoice().order.address_user" name="" id="" cols="30"
+                                        rows="5" placeholder="Note here"></textarea>
+                                </div>
+                                <p ng-show="errorUser" style="color: red;font-weight: 550; font-size: 15px; margin: 5px;">Vui lòng điền đầy đủ và đúng thông tin người mua</p>
+                                <span class="content-left">
+                                    <div>
+                                        <label>Người bán<span>*</span></label><br>
+                                        <input disabled="true" class="custom-input" type="text"
+                                            placeholder="Sheller Name" ng-model="localStorageIdac.username">
+                                    </div>
+                                    <!-- <div>
+                                        <label>Khuyến mãi</label><br>
+                                        <input class="custom-input" type="text" placeholder="Điền mã khuyến mãi">
+                                    </div> -->
+                                </span>
+                                <div class="tongtien" style="display: flex; grid-gap: 20px; align-items: center;">
+                                    <label>Tổng tiền <span>*</span></label><br>
+                                    <input disabled="true" value="{{calculateTotal()}}" class="custom-input"
+                                        type="text">
+                                </div>
+                                <span class="content-left">
+                                    <div>
+                                        <label>Thanh toán tại quầy<span>*</span></label><br>
+                                        <input ng-model="activeInvoice().order.total_payment_off" class="custom-input"
+                                            type="text" placeholder="Điền số tiền">
+                                    </div>
+                                    <div>
+                                        <label>Thanh toán online</label><br>
+                                        <input ng-model="activeInvoice().order.total_payment" class="custom-input"
+                                            type="text" placeholder="Điền số tiền">
+                                    </div>
+                                </span>
+                                <p ng-show="errorPayment" style="color: red;font-weight: 550; font-size: 15px; margin: 5px;">Vui lòng điền đầy đủ thông tin thanh toán</p>
+                                <p ng-show="errorPaymentValid" style="color: red;font-weight: 550; font-size: 15px; margin: 5px;">Tiền thanh toán phải đúng</p>
+                                <div>
+                                    <label>Ghi chú <span>*</span></label><br>
+                                    <textarea name="" id="" cols="25" rows="5" placeholder="Note here"></textarea>
+                                </div>
+                                <button ng-click="thanhToan()">Thanh toán</button>
+                            </div>
+                        </div>
+                        <div class="invoice-right">
+                            <div class="bottom-data">
+                                <div class="orders" style="max-height: 500px;overflow-y: auto;">
+                                    <div class="header">
+                                        <i class='bx bx-receipt'></i>
+                                        <h3>Danh sách sản phẩm</h3>
+                                        <div class="tienich" style="position: relative;">
+                                            <input class="input-timkiem" type="text" placeholder="Điền tên sản phẩm cần tìm" ng-model="searchTen" ng-keyup="searchProducts(searchTen)">
+                                            <i class='bx bx-search' style="position: absolute; right: 0; font-size: 20px;"></i>
+                                        </div>
+                                    </div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Ảnh</th>
+                                                <th>Mã sản phẩm</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Size mặt</th>
+                                                <th>Đơn giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Action</th>
+                                                <!-- <th>Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="watch in watchs">
+                                                <td>
+                                                    <img src="/image/images/{{watch.images[0].image_link}}">
+                                                </td>
+                                                <td>
+                                                    <p>{{watch.code}}</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{watch.product.name}}</p>
+                                                </td>
+                                                <td>
+                                                    <p style="padding-right: 20px;">{{watch.size.name}}</p>
+                                                </td>
+                                                <td ng-show="!watch.giamoi">
+                                                    <p>{{watch.price}} <u>VND</u></p>
+                                                </td>
+                                                <td ng-show="watch.giamoi">
+                                                    <p>{{watch.giamoi}} <u>VND</u></p>
+                                                    <p style="color: gray; font-size: 13.5px;">-{{watch.giamgia}}%</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{watch.quantity_stock}}</p>
+                                                </td>
+                                                <td>
+                                                    <i ng-click="addToCart(watch)" class='bx bx-cart-add'
+                                                        style="color: black;"></i>
+                                                </td>
+                                            </tr>
+                                            <!-- <tr>
+                                                <td>
+                                                    1
+                                                </td>
+                                                <td>
+                                                    <p>John Doe</p>
+                                                </td>
+                                                <td>2</td>
+                                                <td>120.000.000 <u>VND</u></td>
+                                                <td>120.000.000 <u>VND</u></td>
+                                                <td>
+                                                    <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                                </td>
+                                            </tr> -->
+                                            <!-- <tr>
+                                                <td>
+                                                    1
+                                                </td>
+                                                <td>
+                                                    <p>John Doe</p>
+                                                </td>
+                                                <td>2</td>
+                                                <td>120.000.000 <u>VND</u></td>
+                                                <td>120.000.000 <u>VND</u></td>
+                                                <td>
+                                                    <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                                </td>
+                                            </tr> -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="bottom-data">
+                                <div class="orders">
+                                    <div class="header">
+                                        <i class='bx bx-receipt'></i>
+                                        <h3>Giỏ hàng</h3>
+                                        <div class="dropdown-tienich">
+                                            <button ng-click="startQRCodeScanner()" id="dropdown-toggle"
+                                                class="btn-dropdown">
+                                                QR Code sản phẩm <i class='bx bx-qr'></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Sản phẩm</th>
+                                                <th>Size</th>
+                                                <th>Số lượng</th>
+                                                <th>Đơn giá</th>
+                                                <th>Thành tiền</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="cart in activeInvoice().cart track by cart.id">
+                                                <td>
+                                                    <img src="/image/images/{{cart.images[0].image_link}}">
+                                                </td>
+                                                <td>
+                                                    <p>{{cart.product.name}}</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{cart.size.name}}</p>
+                                                </td>
+                                                <td class="tb-soluong">
+                                                    <div class="wrapper">
+                                                        <input class="custom-input" type="number" ng-model="cart.quantity" ng-change="updateCartItemQuantity(cart)" />
+                                                    </div>
+                                                </td>
+                                                <td ng-show="!cart.giamoi">
+                                                    <p>{{cart.price}}<u>VND</u></p>
+                                                </td>
+                                                <td ng-show="!cart.giamoi">
+                                                    <p>{{cart.price * cart.quantity}}<u>VND</u></p>
+                                                </td>
+                                                <td ng-show="cart.giamoi">
+                                                    <p>{{cart.giamoi}}<u>VND</u></p>
+                                                </td>
+                                                <td ng-show="cart.giamoi">
+                                                    <p>{{cart.giamoi * cart.quantity}}<u>VND</u></p>
+                                                </td>
+                                                <td ng-click="removeFromCart(cart)">
+                                                    <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+    </div>
+    <div id="video-container" ng-show="showScanner">
+        <div>
+            <h3>Quét QR Code Sản phẩm</h3>
+            <button ng-click="closeQRCodeScanner()"
+                style="width: 40px; height: 25px; text-align: center; margin: 0 25px 0 0;">x</button>
+        </div>
+        <video id="qr-video" width="600" height="480"></video>
+    </div>
+</body>
+
+</html>

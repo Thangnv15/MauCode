@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="QRCodeScannerApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRCode Scanner</title>
+    <style>
+        #video-container {
+            width: 100%;
+            text-align: center;
+            background-color: red;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body ng-controller="QRCodeScannerController">
+    <div id="video-container">
+        <video id="qr-video" width="640" height="480"></video>
+    </div> 
+    <div id="result">
+        <p>QRCode content: {{ qrCodeResult }}</p>
+        <p ng-if="qrCodeObject">ID: {{ qrCodeObject.id }}</p>
+        <p ng-if="qrCodeObject">Code: {{ qrCodeObject.code }}</p>
+        <!-- Hiển thị các thông tin khác tùy thuộc vào cấu trúc của đối tượng -->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script src="testindex.js"></script>
+</body>
+</html>

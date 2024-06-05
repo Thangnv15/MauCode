@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thương hiệu</title>
+    <link rel="stylesheet" href="phanquyen.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Quản lý phân quyền</h1>
+                </div>
+                <!-- <a href="#" class="report" id="openPopup">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span>Thêm hình dạng</span>
+                </a> -->
+            </div>
+            <div class="danhsach-thuoctinh">
+                <div class="nonequyen" ng-show="quyen !== 'ADM'">
+                    <h2>Bạn không có quyền truy cập</h2>
+                </div>
+                <div class="bottom-data" ng-show="quyen === 'ADM'">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Danh sách</h3>
+                            <div class="tienich">
+                                <div class="search-product" id="search-container">
+                                    <p></p>
+                                    <input type="text" placeholder="Điền sản phẩm cần tìm">
+                                    <i class='bx bx-search' id="search-icon"></i>
+                                </div>
+                                <i class='bx bx-x' id="close-icon"></i>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Họ và tên</th>
+                                    <th>Điện thoại</th>
+                                    <th>Giới tính</th>
+                                    <th>ADM</th>
+                                    <th>STAFF</th>
+                                    <th>CUST</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="acc in accounts" ng-if="acc.vaitroFake !== 'ADM'">
+                                    <td>
+                                        <p>{{acc.email}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{acc.fullname}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{acc.phone}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{ acc.gender === 1 ? 'Nam' : 'Nữ' }}</p>
+                                    </td>
+                                    <!-- <td>
+                                        <p>{{acc.roles[0].name}}</p>
+                                    </td> -->
+                                    <td>
+                                        <input type="checkbox" ng-model="acc.selectedRoles.ADM" ng-click="updateSelectedRoles(acc, 'ADM')">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" ng-model="acc.selectedRoles.STAFF" ng-click="updateSelectedRoles(acc, 'STAFF')">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" ng-model="acc.selectedRoles.CUST" ng-click="updateSelectedRoles(acc, 'CUST')">
+                                    </td>
+                                </tr>
+
+                                <!-- <tr class="edit-tr">
+                                    <td colspan="8">
+                                        <div class="edit-thuoctinh">
+                                            <h4>Tên</h4>
+                                            <input type="text" class="custom-input" placeholder="Điền lại tên">
+                                        </div>
+                                        <div class="button">
+                                            <button>Cập nhập</button>
+                                            <button>Xóa</button>
+                                        </div>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

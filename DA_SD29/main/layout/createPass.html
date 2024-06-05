@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đổi mật khẩu</title>
+    <link rel="stylesheet" href="/main/css/register.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<body>
+    <div class="register">
+        <h2>Đăng Ký</h2>
+        <div class="register-1">
+            <div class="form-register">
+                <h3>
+                    Đổi mật khẩu
+                </h3>
+                <!-- <p>Tạo tài khoản mới sẽ giúp người dùng có thêm nhiều lợi ích</p> -->
+                <div class="contact-left">
+                    <span class="content-left">
+                        <!-- <div> 
+                            <label>Email <span>*</span></label><br>
+                            <input ng-model="email" class="custom-input" type="text" placeholder="Điền Email" ng-blur="checkEmailFormat()">
+                            <span class="error" ng-show="emailFormatError">Email không hợp lệ</span>
+                        </div> -->
+                        <div>
+                            <label>Mật khẩu <span>*</span></label><br>
+                            <input ng-model="pass" class="custom-input" type="password" placeholder="Điền mật khẩu" ng-blur="checkPassNew()">
+                            <span class="error" ng-show="passWordNew">Mật khẩu phải đủ 8 ký tự và không được có ký tự rỗng</span>
+                        </div>
+                        <div>
+                            <label>Điền lại mật khẩu <span>*</span></label><br>
+                            <input ng-model="confirmPass" class="custom-input" type="password" placeholder="Điền lại mật khẩu" ng-blur="checkPass()">
+                            <span class="error" ng-show="passwordMatchError">Mật khẩu không trùng khớp</span>
+                        </div>                        
+                    </span>
+                    <div class="button">
+                        <button class="btn-login" ng-click="xacNhan()">Xác nhận</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

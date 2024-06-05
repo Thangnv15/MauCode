@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thương hiệu</title>
+    <link rel="stylesheet" href="thuonghieu.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Quản lý dòng máy</h1>
+                </div>
+                <a href="#" class="report" id="openPopup">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span>Thêm dòng máy</span>
+                </a>
+            </div>
+            <!-- Popup -->
+            <div class="popup" id="popup">
+                <div class="popup-content">
+                    <span class="close" id="closePopup">&times;</span>
+                    <h2>Thêm dòng máy</h2>
+                    <form class="form-popup">
+                        <div>
+                            <h4>Tên</h4>
+                            <input type="text" class="custom-input" placeholder="Điền tên dòng máy">
+                        </div>
+                        <div class="button">
+                            <button>Thêm mới</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- End popup -->
+
+            <div class="tab-product">
+                <ul>
+                    <li onclick="showDanhSachThuocTinh()" class="active">Danh sách dòng máy</li>
+                    <li onclick="showThuocTinhTrong()">Dòng máy trống</li>
+                </ul>
+            </div>
+            <div class="danhsach-thuoctinh">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>List</h3>
+                            <div class="tienich">
+                                <div class="search-product" id="search-container">
+                                    <p></p>
+                                    <input type="text" placeholder="Điền sản phẩm cần tìm">
+                                    <i class='bx bx-search' id="search-icon"></i>
+                                </div>
+                                <i class='bx bx-x' id="close-icon"></i>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Material</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Iventory</th>
+                                    <th>DateAdded</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img src="images/profile-1.jpg">
+                                    </td>
+                                    <td>
+                                        <p>John Doe</p>
+                                    </td>
+                                    <td>14-08-2023</td>
+                                    <td><span class="status completed">Completed</span></td>
+                                    <td>120.000.000 <u>VND</u></td>
+                                    <td>45</td>
+                                    <td>10/14/2023</td>
+                                    <td>
+                                        <i class='bx bx-dots-horizontal-rounded' style='color:black'
+                                            onclick="toggleEditThuoctinh(this)"></i>
+                                    </td>
+                                </tr>
+                                <tr class="edit-tr">
+                                    <td colspan="8">
+                                        <div class="edit-thuoctinh">
+                                            <h4>Tên</h4>
+                                            <input type="text" class="custom-input" placeholder="Điền lại tên">
+                                        </div>
+                                        <div class="button">
+                                            <button>Cập nhập</button>
+                                            <button>Xóa</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="images/profile-1.jpg">
+                                    </td>
+                                    <td>
+                                        <p>John Doe</p>
+                                    </td>
+                                    <td>14-08-2023</td>
+                                    <td><span class="status pending">Pending</span></td>
+                                    <td>120.000.000 <u>VND</u></td>
+                                    <td>45</td>
+                                    <td>10/14/2023</td>
+                                    <td>
+                                        <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                    </td>
+                                </tr>
+                                <tr class="edit-tr">
+                                    <td colspan="8">
+                                        <div class="edit-thuoctinh">
+                                            <h4>Tên</h4>
+                                            <input type="text" class="custom-input" placeholder="Điền lại tên">
+                                        </div>
+                                        <div class="button">
+                                            <button>Cập nhập</button>
+                                            <button>Xóa</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="images/profile-1.jpg">
+                                    </td>
+                                    <td>
+                                        <p>John Doe</p>
+                                    </td>
+                                    <td>14-08-2023</td>
+                                    <td><span class="status process">Processing</span></td>
+                                    <td>120.000.000 <u>VND</u></td>
+                                    <td>45</td>
+                                    <td>10/14/2023</td>
+                                    <td>
+                                        <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                    </td>
+                                </tr>
+                                <tr class="edit-tr">
+                                    <td colspan="8">
+                                        <div class="edit-thuoctinh">
+                                            <h4>Tên</h4>
+                                            <input type="text" class="custom-input" placeholder="Điền lại tên">
+                                        </div>
+                                        <div class="button">
+                                            <button>Cập nhập</button>
+                                            <button>Xóa</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="thuoctinh-trong">
+                <div class="bottom-data">
+                    <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Danh sách</h3>
+                            <div class="tienich">
+                                <div class="search-product" id="search-container">
+                                    <p></p>
+                                    <input type="text" placeholder="Điền sản phẩm cần tìm">
+                                    <i class='bx bx-search' id="search-icon"></i>
+                                </div>
+                                <i class='bx bx-x' id="close-icon"></i>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Material</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Iventory</th>
+                                    <th>DateAdded</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img src="images/profile-1.jpg">
+                                    </td>
+                                    <td>
+                                        <p>John Doe</p>
+                                    </td>
+                                    <td>14-08-2023</td>
+                                    <td><span class="status completed">Completed</span></td>
+                                    <td>120.000.000 <u>VND</u></td>
+                                    <td>45</td>
+                                    <td>10/14/2023</td>
+                                    <td>
+                                        <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="images/profile-1.jpg">
+                                    </td>
+                                    <td>
+                                        <p>John Doe</p>
+                                    </td>
+                                    <td>14-08-2023</td>
+                                    <td><span class="status pending">Pending</span></td>
+                                    <td>120.000.000 <u>VND</u></td>
+                                    <td>45</td>
+                                    <td>10/14/2023</td>
+                                    <td>
+                                        <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="images/profile-1.jpg">
+                                    </td>
+                                    <td>
+                                        <p>John Doe</p>
+                                    </td>
+                                    <td>14-08-2023</td>
+                                    <td><span class="status process">Processing</span></td>
+                                    <td>120.000.000 <u>VND</u></td>
+                                    <td>45</td>
+                                    <td>10/14/2023</td>
+                                    <td>
+                                        <i class='bx bx-dots-horizontal-rounded' style='color:black'></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        const openPopup = document.getElementById("openPopup");
+        const closePopup = document.getElementById("closePopup");
+        const productPopup = document.getElementById("popup");
+
+        openPopup.addEventListener("click", function () {
+            productPopup.style.display = "block";
+        });
+
+        closePopup.addEventListener("click", function () {
+            productPopup.style.display = "none";
+        });
+
+        function showDanhSachThuocTinh() {
+            document.querySelector(".danhsach-thuoctinh").style.display = "block";
+            document.querySelector(".thuoctinh-trong").style.display = "none";
+        }
+        function showThuocTinhTrong() {
+            document.querySelector(".danhsach-thuoctinh").style.display = "none";
+            document.querySelector(".thuoctinh-trong").style.display = "block";
+        }
+
+
+        // search caties
+        const searchContainer = document.getElementById("search-container");
+        const searchIcon = document.getElementById("search-icon");
+        const closeIcon = document.getElementById("close-icon");
+        const inputSearch = searchContainer.querySelector(".search-product input");
+
+        searchContainer.addEventListener("click", function (event) {
+            event.stopPropagation(); // Ngăn chặn sự kiện click từ lan ra các phần tử cha
+            searchContainer.classList.add("expanded");
+            inputSearch.style.display = "block";
+            closeIcon.style.display = "block";
+            searchIcon.style.display = "block";
+        });
+
+        closeIcon.addEventListener("click", function (event) {
+            closeSearch();
+            event.stopPropagation();
+        });
+
+        function closeSearch() {
+            searchContainer.classList.remove("expanded");
+            inputSearch.style.display = "none";
+            closeIcon.style.display = "none";
+            searchIcon.style.display = "block";
+        }
+
+        // Lấy tất cả các mục danh sách <li>
+        const listItemsthongtinthanhtoan = document.querySelectorAll('.tab-product ul li');
+
+        // Lặp qua từng mục danh sách và thêm sự kiện click
+        listItemsthongtinthanhtoan.forEach((item) => {
+            item.addEventListener('click', () => {
+                // Xóa lớp active khỏi tất cả các mục danh sách
+                listItemsthongtinthanhtoan.forEach((li) => {
+                    li.classList.remove('active');
+                });
+
+                // Thêm lớp active vào mục danh sách được nhấp vào
+                item.classList.add('active');
+            });
+        });
+
+        // edit table
+        // Lấy danh sách tất cả các biểu tượng 3 chấm
+        const editIcons = document.querySelectorAll('.bx-dots-horizontal-rounded');
+
+        // Lặp qua từng biểu tượng 3 chấm
+        editIcons.forEach((icon, index) => {
+            // Gán sự kiện click cho từng biểu tượng
+            icon.addEventListener('click', () => {
+                // Lấy phần tử edit-tr tương ứng dựa vào index
+                const editTr = document.querySelectorAll('.edit-tr')[index];
+
+                // Kiểm tra trạng thái hiển thị của phần tử edit-tr
+                if (editTr.style.display === 'none' || editTr.style.display === '') {
+                    // Nếu ẩn hoặc chưa có style display thì hiển thị
+                    editTr.style.display = 'table-row';
+                } else {
+                    // Nếu đang hiển thị thì ẩn đi
+                    editTr.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

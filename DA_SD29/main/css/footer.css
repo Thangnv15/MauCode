@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+body {
+    /* border-top: #0188ff solid; */
+    font-family: 'Quicksand', sans-serif;
+}
+
+.footer{
+    margin: 0;
+    padding: 0;
+}
+
+.user_benefit_footer ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+}
+.user_benefit_footer ul li{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    max-width: 250px; /* Đặt giới hạn độ rộng cho phần <p> */
+    margin: 0 auto; /* Căn giữa theo chiều ngang */
+    display: flex; /* Thêm display: flex; cho <li> */
+    flex-direction: column; /* Để các phần tử trong <li> xếp dọc */
+}
+.user_benefit_footer ul li div{
+    background-color: #74b1e6;
+    width: 45px;
+    height: 45px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* infomation-footer */
+.infomation-footer{
+    height: 420px;
+    width: 100%;
+    background-color: black;
+    color: white;
+}
+.infomation-footer-1{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.infomation-footer-1>div{
+   padding-left: 15rem;
+}
+
+.infomation-footer-1>div>h2{
+    font-size: xx-large;
+    margin: 2rem 0 1rem 0;
+    padding: 0;
+}
+
+.infomation-footer-1 button{
+    width: 150px;
+    height: 40px;
+    margin-right: 15rem;
+    padding: 5px 15px;
+    border-radius: 25px;
+    background-color: #0188ff;
+    border: none;
+    color: white;
+    cursor: pointer;
+ }
+
+ .infomation-footer-2{
+    margin: 2rem 1rem;
+ }
+
+ .infomation-footer-2>ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+ }
+
+ .infomation-footer-2>ul>li>h3{
+    filter: brightness(70%);
+    margin-bottom: 10px;
+    padding-bottom: 0;
+ }
+ .infomation-footer-2>ul>li>p{
+    font-size: 14px;
+    margin: 0;
+    padding: 0.2rem;
+ }
+
+ .infomation-footer-3{
+    margin: 0rem 2rem;
+ }
+
+ .infomation-footer-3>hr{
+    background-color: white;
+    height: 0.5px;
+    filter: brightness(60%);
+ }
+
+ .infomation-footer-3>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+ }
+ .infomation-footer-3>div>.icon>i{
+    width: 30px;
+    height: 30px;
+ }
+ .infomation-footer-3>div>p{
+    font-size: 12px;
+    filter: brightness(80%);
+    opacity: 0.9;
+    margin-top: 0;
+    padding-top: 0;
+ }

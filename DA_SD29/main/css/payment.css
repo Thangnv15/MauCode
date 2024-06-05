@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+}
+
+.peyment{
+    margin: 1rem 5rem;
+    display: flex;
+    justify-content: center;
+}
+.peyment-left{
+    width: 500px;
+    margin-top: 12px;
+}
+
+.diachithanhtoan{
+    position: relative;
+}
+.edit{
+    position: absolute;
+    top: 0;
+    right: 25px;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.address-saved label {
+    padding: 0 5px;
+    font-size: 14px;
+    color: #0188ff;
+}
+
+.address-saved p {
+    padding: 2px 0 2px 5px;
+    margin: 2px 0;
+    opacity: 0.9;
+    filter: brightness(80%);
+}
+
+.phuongthucthanhtoan{
+    margin-top: 20px;
+    border-top: 1px dotted gray;
+}
+
+.container-radio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container-radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.container-radio:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+.container-radio input:checked~.checkmark {
+    background-color: #0188ff;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container-radio input:checked~.checkmark:after {
+    display: block;
+}
+
+.container-radio .checkmark:after {
+    top: 5.5px;
+    left: 5.5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.btn-dathang{
+    width: 120px;
+    height: 28px;
+    margin-top: 25px;
+    border-radius: 25px;
+    outline: none;
+    border: 1px solid #0188ff;
+    background: none;
+    color: #0188ff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 550;
+}
+.btn-dathang:hover{
+    border: none;
+    background: #0188ff;
+    color: white;
+    cursor: pointer;
+}
+
+.right {
+    background-color: #eaf2fe;
+    padding: 10px 20px;
+    margin-left: 70px;
+    margin-top: 10px;
+    width: 330px;
+    top: 0;
+    position: relative;
+}
+.right h2{
+    margin-top: 5px;
+}
+
+.edit-hoadon{
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tongtien-thanhtoan{
+    border-bottom: 1px dotted gray;
+}
+
+.tongtien-thanhtoan div .title {
+    font-weight: 700;
+    color: #212529;
+}
+
+
+.tongtien-thanhtoan div .value {
+    float: right;
+    font-weight: 550;
+}
+
+.tongtien-thanhtoan u {
+    color: orange;
+}
+
+.tong-sanpham{
+    max-height: 430px;
+    overflow-y: auto;
+}
+
+.tong-sanpham::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tong-sanpham::-webkit-scrollbar-thumb {
+    background-color: rgb(171, 171, 171);
+    border-radius: 5px;
+}
+
+.tong-sanpham::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+
+.sanpham{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 15px;
+    margin-right: 5px;
+}
+.sanpham>div{
+    width: 220px;
+}
+
+.sanpham h4{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.image{
+    height: 40px;
+    width: 40px !important;
+}
+.image img{
+    height: 40px;
+    width: 30px;
+}
+.sanpham ul{
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.sanpham ul li{
+    margin: 3px 0;
+    opacity: 0.8;
+    filter: brightness(80%);
+}

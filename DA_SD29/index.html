@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Bee Watch</title>
+</head>
+ 
+<body>  
+    <div ng-app="client-app">
+        <div ng-include="'main/nav/navbar.html'" ng-controller="controllerNav"></div>
+        <div ng-view>
+        </div>
+        <div ng-include="'main/footer/footer.html'"></div>
+    </div>
+    <script src="index.js"></script>
+    <script src="/main/js/home.js"></script>
+    <script src="/main/js/product.js"></script>
+    <script src="/main/js/login.js"></script>
+    <script src="/main/js/cart.js"></script>
+    <script src="/main/js/address.js"></script>
+    <script src="/main/js/optionCheckout.js"></script>
+    <script src="/main/js/pay.js"></script>
+    <script src="/main/js/user.js"></script>
+    <script src="/main/js/orderDetail.js"></script>
+    <script src="/main/js/register.js"></script>
+    <script src="/main/js/detail.js"></script>
+    <script src="/main/js/checkEmail.js"></script>
+    <script src="/main/js/createAccount.js"></script>
+    <script src="/main/js/checkEmailChangePass.js"></script>
+    <script src="/main/js/changePass.js"></script>
+    <script src="/main/js/navbar.js"></script>
+
+</body>
+
+</html>

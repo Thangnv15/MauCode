@@ -1,0 +1,21 @@
+._product:hover h6{
+    color: #e7ca0a;
+    font-size: 18px;
+}
+._product:hover p{
+    color: #dc3545;
+}
+._product p{
+    color: #FFC107;
+}
+._product:hover img{
+    width: 105%;
+}
+/* footer */
+footer{
+    background-color: white;
+    height: 250px;
+    border-top: 1px solid black;
+    margin-top: 35px;
+    padding: 30px;
+}

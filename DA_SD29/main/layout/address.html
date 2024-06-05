@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address</title>
+    <link rel="stylesheet" href="/main/css/address.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<body>
+    <div class="address">
+        <div class="address-left">
+            <div class="address-left-1">
+                <h2>Lựa chọn địa chỉ</h2>
+            </div>
+            <div class="address-left-2">
+                <h3 class="title">Thêm thông tin nhận hàng mới</h3>
+                <div class="form-thongtin">
+                    <div class="form-thongtin-diachi">
+                        <label>Tên<span>*</span></label><br>
+                        <input ng-model="name" class="custom-input" type="text" placeholder="Điền tên của bạn">
+                    </div>
+                    <span class="content-left">
+                        <div>
+                            <label>Email <span>*</span></label><br>
+                            <input ng-model="email" class="custom-input" type="text" placeholder="Điền email" ng-change="checkEmail()">
+                            <span class="error-message" ng-show="emailError">{{ emailErrorMessage }}</span>
+                        </div>
+                        <div>
+                            <label>Điện thoại <span>*</span></label><br>
+                            <input ng-model="phone" class="custom-input" type="text" placeholder="Điền số điện thoại" ng-change="checkPhone()">
+                            <span class="error-message" ng-show="phoneError">{{ phoneErrorMessage }}</span>
+                        </div>
+                    </span>
+                    <span class="content-left">
+                        <div>
+                            <label>Tỉnh, thành phố <span>*</span></label><br>
+                            <select class="custom-select" ng-model="selectedProvince"
+                                ng-options="province.name for province in addresss" ng-required="true">
+                                <option value="">Chọn tỉnh/thành phố</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Quận, huyện <span>*</span></label><br>
+                            <select class="custom-select" ng-model="selectedDistrict"
+                                ng-options="district.name for district in selectedProvince.districts"
+                                ng-required="true">
+                                <option value="">Chọn Quận/Huyện</option>
+                            </select>
+                        </div>
+                    </span>
+                    <span class="content-left">
+                        <div>
+                            <label>Xã, phường <span>*</span></label><br>
+                            <select class="custom-select" ng-model="selectedWard"
+                                ng-options="ward.name for ward in selectedDistrict.wards" ng-required="true">
+                                <option value="">Chọn Phường/Xã</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Địa chỉ chi tiết <span>*</span></label><br>
+                            <input ng-model="address" class="custom-input" type="text"
+                                placeholder="Điền địa chỉ chi tiết">
+                        </div>
+                    </span>
+                    <div class="button">
+                        <button class="button-save" ng-click="saveAddress()">Lưu thông tin</button>
+                        <button class="button-reset" ng-click="resetForm()">Làm mới</button>
+                    </div>
+                </div>
+            </div>
+            <div class="address-left-3" ng-if="localStorageUsername || localStorageIdac">
+                <h3 class="title">Các địa chỉ nhận hàng đã lưu</h3>
+                <div class="address-right">
+                    <!-- <div title="Click để chọn" class="address-saved" ng-repeat="add in addressAcount">
+                        <label>Địa chỉ {{$index+1}}</label>
+                        <i class='bx bx-check'></i>
+                        <div>
+                            <p>{{add.username}}</p>
+                            <p>{{add.address_detail}},
+                                {{add.town_code}},
+                                {{add.district_code}},
+                                {{add.province_code}}
+                            </p>
+                            <p>{{add.email}}</p>
+                            <p>{{add.phone}}</p>
+                        </div>
+                    </div> -->
+                    <div title="Click để chọn" class="address-saved" ng-repeat="address in addressAcount"
+                        ng-click="selectAddress(address)" ng-class="{ 'active': address.isActive }">
+                        <label>Địa chỉ {{$index + 1}}</label>
+                        <i class='bx bx-check' ng-show="address.isActive"></i>
+                        <div>
+                            <!-- <p>{{address.account_address.id}}</p> -->
+                            <p>{{address.username}}</p>
+                            <p>{{address.address_detail}}, {{address.town_code}}, {{address.district_code}},
+                                {{address.province_code}}</p>
+                            <p>{{address.email}}</p>
+                            <p>{{address.phone}}</p>
+                        </div>
+                        <i title="Sửa địa chỉ" class='bx bxs-edit'></i>
+                        <i title="Xóa địa chỉ" class='bx bxs-trash' ng-click="deleteAddress(address.id)"></i>
+                    </div>
+                    <!-- <div class="address-saved">
+                        <label>Địa chỉ 1</label>
+                        <i class='bx bx-check'></i>
+                        <div>
+                            <p>Duc Nguyen</p>
+                            <p>Uy No,Dong Anh,Ha Noi</p>
+                            <p>ducnguyen@gmail.com</p>
+                            <p>0563797816</p>
+                        </div>
+                    </div>
+                    <div class="address-saved">
+                        <label>Địa chỉ 1</label>
+                        <i class='bx bx-check'></i>
+                        <div>
+                            <p>Duc Nguyen</p>
+                            <p>Uy No,Dong Anh,Ha Noi</p>
+                            <p>ducnguyen@gmail.com</p>
+                            <p>0563797816</p>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <h2>Thông tin đơn hàng</h2>
+            <div class="tongtien-thanhtoan">
+                <div>
+                    <span class="title">Tổng tiền</span>
+                    <span class="value" >{{calculateTotal()}} <u>VND</u></span>
+                </div>
+                <!-- <div>
+                    <span class="title">Phí giao hàng</span>
+                    <span class="value">50.000 <u>VND</u></span>
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 15px;">
+                    <span class="title">Thành tiền</span>
+                    <span class="value">13.050.000 <u>VND</u></span>
+                </div> -->
+            </div>
+            <!-- <h4>{{cart.length}} sản phẩm</h4> -->
+            <h4 ng-if="cartNow.id === undefined">{{cart.length}} sản phẩm</h4>
+            <h4 ng-if="cartNow.id">{{cartNow.quantity}} sản phẩm</h4>
+            <!-- <h4>{{cartNow ? '1 sản phẩm' : cart.length + ' sản phẩm'}}</h4> -->
+            <div class="tong-sanpham">
+                <div ng-if="cartNow.id === undefined">
+                    <div class="sanpham" ng-repeat="sp in cart" >
+                        <div class="image" ng-repeat="image in sp.images">
+                            <img src="/image/images/{{image.image_link}}" alt="">
+                        </div>
+                        <div>
+                            <h4>{{sp.product.name}}</h4>
+                            <ul>
+                                <li>Size: {{sp.size.name}}</li>
+                                <li>Color: {{sp.casecolor.name}} </li>
+                                <li ng-show="!sp.giamoi">Qty: {{sp.quantity}}&nbsp;&nbsp;&nbsp;{{sp.price}} <u>VND</u></li>
+                                <li ng-show="!sp.giamoi">{{sp.quantity*sp.price}} <u>VND</u></li>
+                                <li ng-show="sp.giamoi">Qty: {{sp.quantity}}&nbsp;&nbsp;&nbsp;{{sp.giamoi}} <u>VND</u></li>
+                                <li ng-show="sp.giamoi">{{sp.quantity*sp.giamoi}} <u>VND</u></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="cartNow.id !== undefined">
+                    <div class="sanpham">
+                        <div class="image">
+                            <img src="/image/images/{{cartNow.images[0].image_link}}" alt="">
+                        </div>
+                        <div>
+                            <h4>{{cartNow.product.name}}</h4>
+                            <ul>
+                                <li>Size: {{cartNow.size.name}}</li>
+                                <li>Color: {{cartNow.casecolor.name}} </li>
+                                <li ng-show="!cartNow.giamoi">Qty: {{cartNow.quantity}}&nbsp;&nbsp;&nbsp;{{cartNow.price}} <u>VND</u></li>
+                                <li ng-show="!cartNow.giamoi">{{cartNow.quantity*cartNow.price}} <u>VND</u></li>
+                                <li ng-show="cartNow.giamoi">Qty: {{cartNow.quantity}}&nbsp;&nbsp;&nbsp;{{cartNow.giamoi}} <u>VND</u></li>
+                                <li ng-show="cartNow.giamoi">{{cartNow.quantity*cartNow.giamoi}} <u>VND</u></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="sanpham">
+                    <img src="/image/images/shoe-2.png" alt="">
+                    <div>
+                        <h4>Nike Dunk High Retro Men's Shoes</h4>
+                        <ul>
+                            <li>Size: M 11 / W 12.5</li>
+                            <li>Color: Stadium Green/Stadium </li>
+                            <li>Qty: 1 123.000.000 <u>VND</u></li>
+                            <li>123.000.000 <u>VND</u></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sanpham">
+                    <img src="/image/images/shoe-3.png" alt="">
+                    <div>
+                        <h4>Nike Dunk High Retro Men's Shoes</h4>
+                        <ul>
+                            <li>Size: M 11 / W 12.5</li>
+                            <li>Color: Stadium Green/Stadium </li>
+                            <li>Qty: 1 123.000.000 <u>VND</u></li>
+                            <li>123.000.000 <u>VND</u></li>
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+            <div class="button">
+                <button class="button-buy" ng-click="continueShopping()">Tiếp tục mua hàng</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

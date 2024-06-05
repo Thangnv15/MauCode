@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/main/css/optionCheckout.css">
+
+</head>
+<body>
+    <h2 class="title-checkout">Chọn cách mà bạn muốn tiến hành</h2>
+    <div class="checkout">
+        <div class="left-checkout">
+            <h4>Là khách hàng có tài khoản</h4>
+            <h5>Quản lí thông tin cá nhân, xem tình trạng, lịch sử đơn hàng...</h5>
+            <div class="button">
+                <button ng-click="login()">Đăng nhập</button>
+                <button ng-click="signup()">Đăng ký</button>
+            </div>
+        </div>
+        <div class="right-checkout">
+            <h4>Tiến hành với tư cách là khách</h4>
+            <h5>Bạn có thể tạo hồ sơ BeeWatch với bất kì thời điểm nào!</h5>
+            <div class="button">
+                <button ng-click="guestCheck()">Khách kiểm tra</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

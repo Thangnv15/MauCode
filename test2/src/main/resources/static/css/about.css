@@ -1,0 +1,75 @@
+/* content1 */
+#content1_right {
+    padding-top: 30px;
+}
+
+#content1_left {
+    height: 250px;
+    width: 500px;
+    background-color: white;
+    margin-right: 15px;
+    background-image: url('/images/bannerabout.jpg');
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: right;
+}
+/* content2 */
+#avartar{
+    background-image: url('/images/super-mario.png');
+    width: 100px;
+    height: 100px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+#avartar1{
+    background-image: url('/images/superhero.png');
+    width: 100px;
+    height: 100px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+#avartar2{
+    background-image: url('/images/superhero1.png');
+    width: 100px;
+    height: 100px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+/* Content3 */
+.a_more{
+    color: black;
+    text-decoration: none;
+}
+#firt_more:hover img{
+    width: 99%;
+}
+#firt_more:hover a{
+    color: #212529;
+    text-shadow: 1px 1px 2px gray;
+}
+#firt_more:hover p{
+    text-shadow: 1px 1px 2px gray;
+}
+
+#second_more:hover img{
+    width: 99%;
+}
+#second_more:hover a{
+    color: #212529;
+    text-shadow: 1px 1px 2px gray;
+}
+#second_more:hover p{
+    text-shadow: 1px 1px 2px gray;
+}
+
+#thirth_more:hover img{
+    width: 99%;
+}
+#thirth_more:hover a{
+    color: #212529;
+    text-shadow: 1px 1px 2px gray;
+}
+#thirth_more:hover p{
+    text-shadow: 1px 1px 2px gray;
+}

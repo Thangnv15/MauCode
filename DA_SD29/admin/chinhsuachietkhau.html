@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thương hiệu</title>
+    <link rel="stylesheet" href="khuyenmai3.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="popup-thuoctinh" ng-show="showSanPham"
+        style="z-index: 10000;width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);position: fixed;">
+        <div id="video-container" style="z-index: 10000; height: 630px;">
+            <div style="display: flex; margin-bottom: 5px;">
+                <h2>Chọn sản phẩm</h2>
+                <button class="closeQRCode" ng-click="closeSanPham()"
+                    style="width: 40px; height: 25px; text-align: center; margin: 0 25px 0 25px;">x</button>
+
+            </div>
+            <hr>
+            <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                <p>Sản phẩm đã chọn</p>
+                <div class="tienich" style="position: relative;">
+                    <input class="input-timkiem" type="text" placeholder="Điền tên sản phẩm cần tìm"
+                        ng-model="searchTen" ng-keyup="searchProducts(searchTen)">
+                    <i class='bx bx-search' style="position: absolute; right: 0; font-size: 20px;"></i>
+                </div>
+            </div>
+            <div style="max-height: 500px; overflow-y: auto;">
+                <table class="table table-hover" style="margin-top: 950px;">
+                    <thead>
+                        <th><input type="checkbox" ng-model="selectAll" ng-change="toggleSelectAll()"></th>
+                        <th></th>
+                        <th style="width: 200px; min-width: 200px;">Sản phẩm</th>
+                        <th style="width: 200px; min-width: 200px;">Đơn giá</th>
+                        <th style="width: 200px; min-width: 200px;">Số lượng tồn</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="watch in watchs">
+                            <td><input type="checkbox" ng-model="watch.selected"></td>
+                            <td>
+                                <img src="/image/images/{{watch.images[0].image_link}}">
+                            </td>
+                            <td class="tb-ten" style="margin-left: 10px;">
+                                <p style="margin-left: 10px;">
+                                    {{watch.product.name}}
+                                </p>
+                            </td>
+                            <td class="tb-tien">
+                                <p>
+                                    {{watch.price}}&nbsp;<u>VND</u>
+                                </p>
+                            </td>
+                            <td class="tb-ten">
+                                <p>
+                                    {{watch.quantity_stock}}
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="button" style="display: flex; justify-content: end;">
+                <button ng-click="huySP()">Hủy</button>
+                <button ng-click="xacNhanSP()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Tạo chiết khấu sản phẩm</h1>
+                </div>
+                <!-- <a href="#" class="report" id="openPopup">
+                    <i class='bx bx-plus' style='color:#ffffff'></i>
+                    <span>Thêm thương hiệu</span>
+                </a> -->
+            </div>
+
+            <div class="listKM" style="background-color: white; border-radius: 10px;">
+                <h3 style=" padding: 15px;">Thông tin cơ bản</h3>
+                <div class="contentKM">
+                    <div style="margin-top: 0; padding-top: 0;">
+                        <div style="align-items: center; text-align: center;">
+                            <p style="margin-right: 15px;">Tên chương trình khuyến mãi</p>
+                            <div>
+                                <input type="text" class="custom-input" style="width: 350px;" ng-model="localStorageKMDT.name">
+                            </div>
+                        </div>
+                        <p style="font-size: 15px; color: red; width: 800px;" ng-show="emtyName">Không được điền thiếu tên chương trình</p>
+                        <p style="font-size: 15px; color: red; width: 800px;" ng-show="NameValid">Tên đã tồn tại vui lòng đặt lại tên</p>
+                        <div style="align-items: center; text-align: center;">
+                            <p style="margin-right: 15px;">Thời gian khuyến mãi</p>
+                            <div ng-show="localStorageKMDT.status !== 2">
+                                <input ng-model="startTime" type="datetime-local" class="custom-input"
+                                    style="width: 150px;" ng-change="updateThoiGian()" >
+                            </div>
+                            <div ng-show="localStorageKMDT.status === 2">
+                                <input  ng-model="startTime" type="datetime-local" class="custom-input"
+                                    style="width: 150px;" disabled="true" ng-change="updateThoiGian()" >
+                            </div>
+                            <p style="margin: 0 5px;">-</p>
+                            <div>
+                                <input ng-model="endTime" type="datetime-local" class="custom-input"
+                                    style="width: 150px;" ng-change="updateThoiGian()">
+                            </div>
+                        </div>
+                        <p style="font-size: 15px; color: red;width: 700px;" ng-show="emtyTime">Chưa điền thời gian</p>
+                        <p style="font-size: 15px; color: red;width: 700px;" ng-show="timeValid">Thời gian phải hợp lệ (Sau phải lớn hơn trước)</p>
+                        <p style="font-size: 15px; color: red;width: 700px;" ng-show="timeBatDau">Thời gian bắt đầu phải lớn hơn thời gian hiện tại</p>
+                        <!-- <div>
+                            <input ng-model="test" type="datetime-local" class="custom-input" style="width: 150px;">
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="danhsach-thuoctinh">
+                <div class="bottom-data">
+                    <div class="orders" >
+                        <div class="header">
+                            <i class='bx bx-receipt'></i>
+                            <h3>Sản phẩm khuyến mãi</h3>
+                            <div class="tienich">
+                                <div class="search-product" id="search-container">
+                                    <p></p>
+                                    <input type="text" placeholder="Điền sản phẩm cần tìm">
+                                    <!-- <i class='bx bx-search' id="search-icon"></i> -->
+                                </div>
+                                <i class='bx bx-x' id="close-icon"></i>
+                            </div>
+                        </div>
+                        <div class="button" style="justify-content: start;">
+                            <button style="width: 200px; margin-top: 5px; margin-bottom: 20px;"
+                                ng-click="showThemSanPham()">Thêm sản phẩm +</button>
+                        </div>
+                        <div style="margin: 5px 0 25px 0;display: flex; justify-content: space-between; align-items: center;"
+                            ng-show="count>0">
+                            <p>{{count}} Sản phẩm đã chọn</p>
+                            <div class="button" style="display: flex; justify-content: end;">
+                                <td class="tb-tien">
+                                    <input style="width: 120px; max-width: 130px;" type="number" name="" id=""
+                                        class="custom-input" ng-model="giamgiahangloat"
+                                        ng-change="updateGiamgiahangloat()">
+                                </td>
+                                <button ng-click="capnhapHangloat()" style="width: 200px;">
+                                    Cập nhập hàng loạt
+                                </button>
+                            </div>
+                        </div>
+                        <div style="overflow-y: auto; max-height: 700px;">
+                            <table >
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" ng-model="selectAllSP" ng-change="toggleSelectAllSP()">
+                                        </th>
+                                        <th></th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá sản phẩm</th>
+                                        <th>Ưu đãi(%)</th>
+                                        <th>Kho</th>
+                                        <th>Hành dộng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="sp in mangSanPham">
+                                        <td><input type="checkbox" ng-model="sp.selected" ng-click="toggleSelectSP(sp)">
+                                        </td>
+                                        <td>
+                                            <img src="/image/images/{{sp.id_sanpham.images[0].image_link}}">
+                                        </td>
+                                        <td class="tb-ten" style="margin-left: 10px;">
+                                            <p style="margin-left: 10px;">
+                                                {{sp.id_sanpham.product.name}}
+                                            </p>
+                                        </td>
+                                        <td class="tb-tien"
+                                            style="display: flex; flex-direction: column; max-width: 300px;">
+                                            <p ng-show="!sp.giaMoi">
+                                                {{sp.id_sanpham.price | number:2}}&nbsp;<u>VND</u>
+                                            </p>
+                                            <p ng-show="sp.giaMoi">
+                                                {{sp.giaMoi | number:2}}&nbsp;<u>VND</u>
+                                            </p>
+                                            <p style="color: red; font-size: 13px;" ng-show="sp.fix">Chiết khấu sai, vui
+                                                lòng đặt lại</p>
+                                            <p style="color: rgb(162, 162, 5); font-size: 13px;" ng-show="sp.fix40">Sản phẩm
+                                                giảm quá 40%</p>
+                                            <p style="color: orange; font-size: 13px;" ng-show="sp.fix60">Sản phẩm giảm quá
+                                                60%</p>
+                                            <p style="color: orangered; font-size: 13px;" ng-show="sp.fix80">Sản phẩm giảm
+                                                quá 80%</p>
+                                        </td>
+                                        <td class="tb-tien" ng-show="sp.giamgia">
+                                            <input style="width: 80px; max-width: 90px;" type="number" name="" id=""
+                                                class="custom-input" ng-model="sp.giamgia"
+                                                ng-change="updateSoLuongSanPham(sp)">
+                                        </td>
+                                        <td class="tb-tien" ng-show="!sp.giamgia">
+                                            <input style="width: 80px; max-width: 90px;" type="number" name="" id=""
+                                                class="custom-input" ng-model="sp.id_sanpham.giamgia"
+                                                ng-change="updateSoLuongSanPham(sp)">
+                                        </td>
+                                        <td class="tb-ten">
+                                            <p>
+                                                {{sp.tongQuantityStock}}
+                                            </p>
+                                        </td>
+                                        <td style="font-size: 18px; color: #0188ff; font-weight: 550;" ng-click="xoaSP(sp)">
+                                            Xóa
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button" style="justify-content: ends;" >
+                <button ng-click="xacNhan()">Xác nhận</button>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>

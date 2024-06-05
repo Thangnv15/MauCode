@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/main/css/navbar.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container_navbar">
+        <div class="content_left_navbar_navbar">
+            <ul class="danhmuc_list_navbar">
+                <img src="/admin/images/bee (1).png" style="width: 40px;image-rendering: pixelated">
+                <li ng-click="searchCates('Nam')">
+                    <h3>Nam</h3>
+                </li>
+                <li ng-click="searchCates('Nữ')">
+                    <h3>Nữ</h3>
+                </li>
+                <!-- <li>
+                    <h3>Phụ kiện</h3>
+                </li>
+                <li>
+                    <h3>Dịch vụ</h3>
+                </li> -->
+                <li>
+                    <h3><a href="#about">Giới thiệu</a></h3>
+                </li>
+                <li>
+                    <h3><a href="#contact">Liên hệ</a></h3>
+                </li>
+                <li ng-click="searchCates('none')">
+                    <h3><a>Tất cả sản phẩm</a></h3>
+                </li>
+                <li>
+                    <h3><a href="#home">Trang chủ</a></h3>
+                </li>
+            </ul>
+        </div>
+        <div class="content_right_navbar" style="position: relative;">
+            <ul class="danhmuc_right_list_navbar">
+                <li class="icon-cart">
+                    <a href="#cart">
+                        <i class='bx bx-cart'></i>
+                    </a>
+                    <div class="badge-cart" ng-show="cart.length>0">
+                        {{cart.length}}
+                    </div>
+                </li>
+                <li>
+                    <a href="#user">
+                        <i class='bx bx-user'></i>
+                    </a>
+                </li>
+                <li>
+                    <a ng-click="showThongBao()">
+                        <i class='bx bxs-bell'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#login" ng-hide="username">
+                        <i href="#login" title="Đăng nhập" class='bx bx-log-in-circle'></i>
+                    </a>
+                    <div style="display: flex; position: relative;" ng-show="username">
+                        <h4 id="welcome-message">Chào mừng, {{ username }}</h4>
+                        <div class="search-icon-navbar">
+                            <p ng-click="logout()">Đăng xuất</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="thongbao" ng-show="showThongBaoFlag">
+                <div ng-repeat="thongbao in thongbaos" ng-if="thongbao.order.account.id === localStorageIdac.id"
+                    style="justify-content: start; padding: 5px; margin: 10px 8px;">
+                    <p ng-show="thongbao.status === 0">Đơn hàng <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> của bạn đã được xác nhận - Ngày {{thongbao.create_date}}</p>
+                    <p ng-show="thongbao.status === 1">Đơn hàng <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> đang được giao đến bạn</p>
+                    <p ng-show="thongbao.status === 2">Đơn hàng <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> đã được xác nhận hoàn - Ngày {{thongbao.create_date}}</p>
+                    <p ng-show="thongbao.status === 3">Đơn hàng <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> bị từ chối hoàn - Ngày {{thongbao.create_date}}</p>
+                    <p ng-show="thongbao.status === 4">Đơn hàng <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> của bạn đã bị hủy - Ngày {{thongbao.create_date}}</p>
+                    <p ng-show="thongbao.status === 5">Đơn hàng <span style="color: #0188ff; font-size: 18px;">{{thongbao.order.code}}</span> của bạn giao hàng không thành công - Ngày {{thongbao.create_date}}</p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
